@@ -11,10 +11,16 @@ import { join } from 'node:path';
 const PATTERNS = [
   { name: 'Supabase secret key', re: /sb_secret_[A-Za-z0-9_-]{10,}/ },
   { name: 'service_role reference with JWT', re: /service_role["']?\s*[:=]\s*["']eyJ/ },
-  { name: 'Postgres connection string with password', re: /postgres(?:ql)?:\/\/[^:\s'"]+:[^@\s'"]{6,}@/ },
-  { name: 'OpenAI key', re: /sk-(?:proj-)?[A-Za-z0-9_-]{20,}/ },
+  {
+    name: 'Postgres connection string with password',
+    re: /postgres(?:ql)?:\/\/[^:\s'"]+:[^@\s'"]{6,}@/,
+  },
+  { name: 'OpenAI key', re: /(?<![A-Za-z0-9_-])sk-(?:proj-|svcacct-|admin-)?[A-Za-z0-9_-]{32,}/ },
   { name: 'GitHub token', re: /gh[pousr]_[A-Za-z0-9]{30,}/ },
-  { name: 'Cloudflare API token assignment', re: /CLOUDFLARE_API_TOKEN\s*=\s*['"]?[A-Za-z0-9_-]{30,}/ },
+  {
+    name: 'Cloudflare API token assignment',
+    re: /CLOUDFLARE_API_TOKEN\s*=\s*['"]?[A-Za-z0-9_-]{30,}/,
+  },
   { name: 'Private key block', re: /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/ },
   { name: 'Legacy production Supabase project', re: /cdmzrsvwztndqfwzsumo\.supabase\.co/ },
 ];
@@ -30,7 +36,9 @@ const ALLOW = [
 
 function trackedFiles() {
   try {
-    return execSync('git ls-files -co --exclude-standard', { encoding: 'utf8' }).split('\n').filter(Boolean);
+    return execSync('git ls-files -co --exclude-standard', { encoding: 'utf8' })
+      .split('\n')
+      .filter(Boolean);
   } catch {
     return [];
   }

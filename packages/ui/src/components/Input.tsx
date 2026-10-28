@@ -4,7 +4,7 @@ import { cn, focusRing } from '../lib/cn';
 
 const inputBase = cn(
   'h-10 w-full min-w-0 rounded-md border border-border-input bg-surface-sunken px-3 text-sm text-fg',
-  'placeholder:text-fg-subtle transition-colors duration-(--duration-fast)',
+  'transition-colors duration-(--duration-fast) placeholder:text-fg-subtle',
   'hover:border-fg-subtle disabled:cursor-not-allowed disabled:opacity-50',
   'aria-invalid:border-danger aria-invalid:focus-visible:ring-danger',
   focusRing,
@@ -60,8 +60,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
   );
 });
 
-export interface SearchFieldProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'> {
+export interface SearchFieldProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'value' | 'onChange'
+> {
   label: string;
   value: string;
   onValueChange: (value: string) => void;

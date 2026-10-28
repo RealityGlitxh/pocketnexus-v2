@@ -1,7 +1,7 @@
 import { signUpSchema } from '@pocketnexus/shared';
 import { Button, TextField } from '@pocketnexus/ui';
 import { MailCheck } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 import { Link, Navigate } from 'react-router';
 import { signUp } from '@/services/auth.service';
 import { AuthFormShell, FormError } from '../AuthFormShell';
@@ -22,7 +22,7 @@ export function SignUpPage() {
 
   if (state.status === 'signed_in') return <Navigate to="/" replace />;
 
-  async function onSubmit(e: FormEvent) {
+  async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormError(null);
     const values = validate();

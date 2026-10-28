@@ -1,8 +1,19 @@
-import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from '@pocketnexus/ui';
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@pocketnexus/ui';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { PageHeader } from '@/components/PageHeader';
 import { NotConfiguredNotice, useAuth } from '@/features/auth';
-import { useTheme, type ThemePreference } from '@/app/theme';
+import { useTheme, type ThemePreference } from '@/app/themeContext';
 
 const themeOptions: { value: ThemePreference; label: string; icon: typeof Sun }[] = [
   { value: 'dark', label: 'Dark', icon: Moon },
@@ -16,7 +27,10 @@ export function SettingsPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <PageHeader title="Settings" description="Personalise how PocketNexus looks and behaves on this device." />
+      <PageHeader
+        title="Settings"
+        description="Personalise how PocketNexus looks and behaves on this device."
+      />
       <Tabs defaultValue="appearance">
         <TabsList aria-label="Settings sections">
           <TabsTrigger value="appearance">Appearance</TabsTrigger>

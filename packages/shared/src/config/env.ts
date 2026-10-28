@@ -19,11 +19,9 @@ const publishableKey = z
     message: 'A service_role JWT was supplied to the browser. Use the publishable/anon key.',
   });
 
-const supabaseUrl = z
-  .url()
-  .refine((u) => !FORBIDDEN_SUPABASE_REFS.some((ref) => u.includes(ref)), {
-    message: 'This Supabase URL belongs to the legacy production project and is not allowed in V2.',
-  });
+const supabaseUrl = z.url().refine((u) => !FORBIDDEN_SUPABASE_REFS.some((ref) => u.includes(ref)), {
+  message: 'This Supabase URL belongs to the legacy production project and is not allowed in V2.',
+});
 
 export const clientEnvSchema = z
   .object({
@@ -32,10 +30,9 @@ export const clientEnvSchema = z
     VITE_SUPABASE_PUBLISHABLE_KEY: z.preprocess(emptyToUndefined, publishableKey.optional()),
     VITE_SITE_URL: z.preprocess(emptyToUndefined, z.url().optional()),
   })
-  .refine(
-    (env) => Boolean(env.VITE_SUPABASE_URL) === Boolean(env.VITE_SUPABASE_PUBLISHABLE_KEY),
-    { message: 'VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY must be set together.' },
-  );
+  .refine((env) => Boolean(env.VITE_SUPABASE_URL) === Boolean(env.VITE_SUPABASE_PUBLISHABLE_KEY), {
+    message: 'VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY must be set together.',
+  });
 
 export type ClientEnv = z.infer<typeof clientEnvSchema>;
 
@@ -58,7 +55,7 @@ export interface ParsedClientEnv {
 export function parseClientEnv(raw: Record<string, unknown>): ParsedClientEnv {
   const result = clientEnvSchema.safeParse(raw);
   if (!result.success) {
-    const appEnv = z.enum(APP_ENVIRONMENTS).catch('development').parse(raw['VITE_APP_ENV']);
+    const appEnv = z.enum(APP_ENVIRONMENTS).catch('development').parse(raw.VITE_APP_ENV);
     return {
       appEnv,
       siteUrl: undefined,

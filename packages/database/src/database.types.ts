@@ -11,7 +11,10 @@
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
-type Timestamps = { created_at: string; updated_at: string };
+interface Timestamps {
+  created_at: string;
+  updated_at: string;
+}
 
 export interface Database {
   public: {
@@ -116,7 +119,7 @@ export interface Database {
         Relationships: [];
       };
     };
-    Views: Record<never, never>;
+    Views: { [_ in never]: never };
     Functions: {
       get_shared_deck: {
         Args: { p_deck_id: string };
@@ -132,8 +135,8 @@ export interface Database {
         }[];
       };
     };
-    Enums: Record<never, never>;
-    CompositeTypes: Record<never, never>;
+    Enums: { [_ in never]: never };
+    CompositeTypes: { [_ in never]: never };
   };
   catalog: {
     Tables: {
@@ -201,10 +204,10 @@ export interface Database {
         Relationships: [];
       };
     };
-    Views: Record<never, never>;
-    Functions: Record<never, never>;
-    Enums: Record<never, never>;
-    CompositeTypes: Record<never, never>;
+    Views: { [_ in never]: never };
+    Functions: { [_ in never]: never };
+    Enums: { [_ in never]: never };
+    CompositeTypes: { [_ in never]: never };
   };
 }
 

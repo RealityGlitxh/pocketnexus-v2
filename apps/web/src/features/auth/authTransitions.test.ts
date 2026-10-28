@@ -4,7 +4,10 @@ import { identityChanged, nextAuthState } from './authTransitions';
 
 const alice = { user: { id: 'u-alice', email: 'alice@example.test' } };
 const bob = { user: { id: 'u-bob', email: 'bob@example.test' } };
-const signedInAlice: AuthState = { status: 'signed_in', user: { id: 'u-alice', email: 'alice@example.test' } };
+const signedInAlice: AuthState = {
+  status: 'signed_in',
+  user: { id: 'u-alice', email: 'alice@example.test' },
+};
 
 describe('nextAuthState', () => {
   it('loading → signed_in on a session', () => {
@@ -25,8 +28,13 @@ describe('nextAuthState', () => {
   });
 
   it('produces a new state when the email changes', () => {
-    const next = nextAuthState(signedInAlice, { user: { id: 'u-alice', email: 'new@example.test' } });
-    expect(next).toEqual({ status: 'signed_in', user: { id: 'u-alice', email: 'new@example.test' } });
+    const next = nextAuthState(signedInAlice, {
+      user: { id: 'u-alice', email: 'new@example.test' },
+    });
+    expect(next).toEqual({
+      status: 'signed_in',
+      user: { id: 'u-alice', email: 'new@example.test' },
+    });
   });
 
   it('normalises a missing email to null', () => {

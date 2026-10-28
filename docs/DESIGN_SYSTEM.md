@@ -21,6 +21,7 @@ primary for actions and active state, electric blue as a secondary accent. One d
 3. **Components** use only semantic utilities.
 
 **Rules**
+
 - No hex/rgb values or Tailwind default palette classes (`bg-violet-500`) in components.
 - No `style={…}` in app code (ESLint error).
 - New needs → add a semantic token, then use it.
@@ -65,24 +66,24 @@ under `prefers-reduced-motion`.
 
 ## Components (`@pocketnexus/ui`)
 
-| Component | Notes |
-| --- | --- |
-| `Button` | Variants `primary/secondary/ghost/danger/link`; sizes `sm/md/lg/icon/icon-sm`; `loading` sets `aria-busy` and disables; `asChild` for links; defaults to `type="button"` |
-| `TextField` | Label + hint + error wiring |
-| `SearchField` | Hidden label, leading icon, clear button |
-| `Card` (+ Header/Title/Description/Content/Footer) | Bordered surface |
-| `Badge` | Tones `neutral/primary/accent/success/warning/danger` |
-| `Table` (+ Header/Body/Row/Head/Cell) | Scrolls horizontally inside its own container |
-| `Dialog` | Requires a `title` (can be visually hidden) |
-| `DropdownMenu` | Items support `destructive` |
-| `Tabs` | Horizontal-scrolling list on small screens |
-| `ToastProvider` / `useToast` | Max 4 visible; errors persist longer |
-| `Skeleton`, `Spinner` | Skeletons are `aria-hidden`; wrap regions with `aria-busy` |
-| `EmptyState`, `ErrorState` | `ErrorState` is `role="alert"` |
-| `NavSection`, `NavItem` | Router-agnostic; active styling from `aria-current="page"` |
+| Component                                          | Notes                                                                                                                                                                    |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Button`                                           | Variants `primary/secondary/ghost/danger/link`; sizes `sm/md/lg/icon/icon-sm`; `loading` sets `aria-busy` and disables; `asChild` for links; defaults to `type="button"` |
+| `TextField`                                        | Label + hint + error wiring                                                                                                                                              |
+| `SearchField`                                      | Hidden label, leading icon, clear button                                                                                                                                 |
+| `Card` (+ Header/Title/Description/Content/Footer) | Bordered surface                                                                                                                                                         |
+| `Badge`                                            | Tones `neutral/primary/accent/success/warning/danger`                                                                                                                    |
+| `Table` (+ Header/Body/Row/Head/Cell)              | Scrolls horizontally inside its own container                                                                                                                            |
+| `Dialog`                                           | Requires a `title` (can be visually hidden)                                                                                                                              |
+| `DropdownMenu`                                     | Items support `destructive`                                                                                                                                              |
+| `Tabs`                                             | Horizontal-scrolling list on small screens                                                                                                                               |
+| `ToastProvider` / `useToast`                       | Max 4 visible; errors persist longer                                                                                                                                     |
+| `Skeleton`, `Spinner`                              | Skeletons are `aria-hidden`; wrap regions with `aria-busy`                                                                                                               |
+| `EmptyState`, `ErrorState`                         | `ErrorState` is `role="alert"`                                                                                                                                           |
+| `NavSection`, `NavItem`                            | Router-agnostic; active styling from `aria-current="page"`                                                                                                               |
 
 ## Placeholder policy
 
 Unfinished pages use `PlaceholderPage`: an **"In development"** badge, an explicit "No data shown
-here is real" statement, and a list of *planned* capabilities. Never render invented numbers,
+here is real" statement, and a list of _planned_ capabilities. Never render invented numbers,
 players, or tournament results.

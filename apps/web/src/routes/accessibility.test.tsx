@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { act, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { renderApp } from '@/test/renderApp';
@@ -8,7 +8,7 @@ describe('navigation accessibility', () => {
     const { router } = renderApp('/');
     await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
     expect(document.title).toBe('Dashboard · PocketNexus');
-    await router.navigate('/meta');
+    await act(() => router.navigate('/meta'));
     await screen.findByRole('heading', { level: 1, name: 'Meta Center' });
     expect(document.title).toBe('Meta Center · PocketNexus');
   });
@@ -65,7 +65,9 @@ describe('navigation accessibility', () => {
     renderApp('/');
     await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
     const nav = screen.getAllByRole('navigation', { name: 'Primary' })[0]!;
-    expect(within(nav).getByRole('link', { name: 'Deck Lab (in development)' })).toBeInTheDocument();
+    expect(
+      within(nav).getByRole('link', { name: 'Deck Lab (in development)' }),
+    ).toBeInTheDocument();
     expect(within(nav).getByRole('link', { name: 'Settings' })).toBeInTheDocument();
   });
 });

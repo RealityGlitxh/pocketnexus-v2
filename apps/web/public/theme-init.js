@@ -3,7 +3,9 @@
 (function () {
   try {
     var t = localStorage.getItem('pn.theme');
-    var light = t === 'light' || (t === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+    var light =
+      t === 'light' ||
+      (t === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
     document.documentElement.dataset.theme = light ? 'light' : 'dark';
   } catch (e) {
     /* storage unavailable: keep dark default */

@@ -84,7 +84,9 @@ export async function signUp(input: SignUpInput): Promise<Result<{ needsConfirma
   const client = getSupabase();
   if (!client) return notConfigured();
   const { email, password, username } = parsed.data;
-  const { data, error } = await (await client).auth.signUp({
+  const { data, error } = await (
+    await client
+  ).auth.signUp({
     email,
     password,
     options: {
@@ -118,12 +120,17 @@ export async function requestPasswordReset(
   if (!parsed.success) return invalid(parsed.error.issues[0]?.message);
   const client = getSupabase();
   if (!client) return notConfigured();
-  const { error } = await (await client).auth.resetPasswordForEmail(parsed.data.email, {
+  const { error } = await (
+    await client
+  ).auth.resetPasswordForEmail(parsed.data.email, {
     redirectTo: redirectUrl('/auth/update-password'),
   });
   // Rate limiting is the only error worth surfacing; everything else looks
   // like success so the form can't be used to probe for accounts.
-  if (error && (error.code === 'over_email_send_rate_limit' || error.code === 'over_request_rate_limit')) {
+  if (
+    error &&
+    (error.code === 'over_email_send_rate_limit' || error.code === 'over_request_rate_limit')
+  ) {
     return err(appError('rate_limited'));
   }
   return ok(null);

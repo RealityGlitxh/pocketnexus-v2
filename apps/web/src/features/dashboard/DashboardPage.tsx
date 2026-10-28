@@ -1,4 +1,12 @@
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@pocketnexus/ui';
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@pocketnexus/ui';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { PageHeader } from '@/components/PageHeader';

@@ -37,7 +37,9 @@ for (const { path, heading } of ROUTES) {
     // The unofficial disclaimer is always present.
     await expect(page.getByText(/not affiliated with/i).first()).toBeAttached();
 
-    const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
+    const axe = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+      .analyze();
     expect(axe.violations.map((v) => `${v.id}: ${v.help} (${v.nodes.length})`)).toEqual([]);
 
     expect(errors).toEqual([]);
@@ -59,7 +61,10 @@ test('navigation works on every viewport', async ({ page, isMobile }) => {
     await expect(drawer).toBeHidden();
   } else {
     await expect(page.getByRole('button', { name: 'Open navigation' })).toBeHidden();
-    await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: /Battle Tracker/ }).click();
+    await page
+      .getByRole('navigation', { name: 'Primary' })
+      .getByRole('link', { name: /Battle Tracker/ })
+      .click();
   }
   await expect(page).toHaveURL(/\/battles$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Battle Tracker' })).toBeVisible();
@@ -116,6 +121,8 @@ test('dashboard does not load the Supabase SDK when no backend is configured', a
 test('keyboard users can skip to content', async ({ page, isMobile }) => {
   test.skip(isMobile, 'keyboard navigation is a desktop concern');
   await page.goto('/');
+  // Wait for the lazily loaded shell before sending keystrokes.
+  await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
   await page.keyboard.press('Tab');
   const skip = page.getByRole('link', { name: 'Skip to content' });
   await expect(skip).toBeFocused();

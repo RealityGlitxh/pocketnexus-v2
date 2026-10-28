@@ -81,7 +81,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined 
         <NavLinks entries={accountNav} label="Account" onNavigate={onNavigate} />
       </nav>
       <p className="border-t border-border px-4 py-3 text-2xs leading-relaxed text-fg-subtle">
-        Unofficial fan project. Not affiliated with Nintendo, The Pokémon Company, Creatures, or DeNA.
+        Unofficial fan project. Not affiliated with Nintendo, The Pokémon Company, Creatures, or
+        DeNA.
       </p>
     </div>
   );
@@ -111,7 +112,9 @@ function UserMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel className="truncate">{state.user.email ?? 'Signed in'}</DropdownMenuLabel>
+        <DropdownMenuLabel className="truncate">
+          {state.user.email ?? 'Signed in'}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void navigate('/profile')}>
           <UserRound aria-hidden /> Profile
@@ -125,7 +128,8 @@ function UserMenu() {
           onSelect={() => {
             void signOut().then((r) => {
               if (r.ok) void navigate('/');
-              else toast({ title: 'Sign out failed', description: r.error.message, tone: 'danger' });
+              else
+                toast({ title: 'Sign out failed', description: r.error.message, tone: 'danger' });
             });
           }}
         >
@@ -157,6 +161,7 @@ export function AppShell() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigatedFromDrawer = useRef(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const isFirstRender = useRef(true);
 
   // Drawer links close the drawer themselves (no setState inside effects).
@@ -200,12 +205,16 @@ export function AppShell() {
           title="Navigation"
           hideTitle
           onCloseAutoFocus={(e) => {
-            // Esc / close button: Radix returns focus to the menu button.
-            // Navigation: send focus to the new page instead.
+            // The menu button lives outside the Dialog root, so Radix has no
+            // trigger to restore focus to; do it explicitly.
+            //  - Navigation: send focus to the new page.
+            //  - Esc / close button / overlay: back to the menu button.
+            e.preventDefault();
             if (navigatedFromDrawer.current) {
-              e.preventDefault();
               navigatedFromDrawer.current = false;
               focusMain();
+            } else {
+              menuButtonRef.current?.focus();
             }
           }}
           className="top-0 left-0 h-dvh max-h-dvh w-(--spacing-sidebar) max-w-[85vw] translate-x-0 translate-y-0 gap-0 rounded-none border-y-0 border-l-0 p-0 data-[state=open]:animate-slide-in-left"
@@ -217,6 +226,7 @@ export function AppShell() {
       <div className="lg:pl-(--spacing-sidebar)">
         <header className="sticky top-0 z-20 flex h-(--spacing-topbar) items-center gap-3 border-b border-border bg-canvas/80 px-4 backdrop-blur-xl sm:px-6">
           <Button
+            ref={menuButtonRef}
             variant="ghost"
             size="icon"
             className="lg:hidden"

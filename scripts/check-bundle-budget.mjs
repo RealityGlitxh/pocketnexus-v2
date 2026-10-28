@@ -28,10 +28,14 @@ const files = readdirSync(assets);
 // Initial JS = entry script + its modulepreloads referenced from index.html.
 const initial = [...html.matchAll(/(?:src|href)="\/assets\/([^"]+\.js)"/g)].map((m) => m[1]);
 const initialKb = initial.reduce((sum, f) => sum + kb(readFileSync(join(assets, f))), 0);
-const cssKb = files.filter((f) => f.endsWith('.css')).reduce((s, f) => s + kb(readFileSync(join(assets, f))), 0);
+const cssKb = files
+  .filter((f) => f.endsWith('.css'))
+  .reduce((s, f) => s + kb(readFileSync(join(assets, f))), 0);
 
 const problems = [];
-console.log(`Initial JS (${initial.length} files): ${initialKb.toFixed(1)} kB gz  (budget ${BUDGET.initialJsKb})`);
+console.log(
+  `Initial JS (${initial.length} files): ${initialKb.toFixed(1)} kB gz  (budget ${BUDGET.initialJsKb})`,
+);
 if (initialKb > BUDGET.initialJsKb) problems.push('initial JS over budget');
 console.log(`CSS: ${cssKb.toFixed(1)} kB gz  (budget ${BUDGET.cssKb})`);
 if (cssKb > BUDGET.cssKb) problems.push('CSS over budget');

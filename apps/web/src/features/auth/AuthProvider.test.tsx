@@ -6,17 +6,24 @@ import { AuthProvider } from './AuthProvider';
 
 // --- Fake Supabase client ---------------------------------------------------
 type Listener = (event: string, session: unknown) => void;
-const fake = vi.hoisted(() => ({
-  listeners: [] as ((event: string, session: unknown) => void)[],
-  initialSession: null as unknown,
-  unsubscribed: 0,
-}));
+const fake = vi.hoisted(() => {
+  const state: { listeners: Listener[]; initialSession: unknown; unsubscribed: number } = {
+    listeners: [],
+    initialSession: null,
+    unsubscribed: 0,
+  };
+  return state;
+});
 
 vi.mock('@/lib/env', () => ({
   env: {
     appEnv: 'development',
     siteUrl: undefined,
-    supabase: { status: 'configured', url: 'https://example.supabase.co', publishableKey: 'sb_publishable_test' },
+    supabase: {
+      status: 'configured',
+      url: 'https://example.supabase.co',
+      publishableKey: 'sb_publishable_test',
+    },
   },
 }));
 

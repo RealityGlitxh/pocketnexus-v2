@@ -3,6 +3,7 @@
 ## Why
 
 ## Checklist
+
 - [ ] `pnpm verify` passes locally
 - [ ] New UI uses design tokens only (no raw colors / inline styles)
 - [ ] New tables have RLS policies **and** tests in `supabase/tests/`

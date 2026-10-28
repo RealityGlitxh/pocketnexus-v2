@@ -22,7 +22,6 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;
           if (id.includes('@supabase')) return 'supabase';
-          if (id.includes('@radix-ui')) return 'radix';
           if (/[\\/]node_modules[\\/](react|react-dom|scheduler|react-router)[\\/]/.test(id)) {
             return 'react';
           }

@@ -31,6 +31,7 @@ export function TabsTrigger({
         'data-[state=active]:bg-surface-raised data-[state=active]:text-fg data-[state=active]:shadow-sm',
         'disabled:pointer-events-none disabled:opacity-50',
         focusRing,
+        className,
       )}
       {...props}
     />

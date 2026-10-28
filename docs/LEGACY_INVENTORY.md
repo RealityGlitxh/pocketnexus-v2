@@ -6,6 +6,7 @@ commit `d729ac4` ("chore(ui2): refresh competitive workspace assets", 2026‑10�
 modified, or deployed.
 
 **Not inspected (no access from the build environment):**
+
 - The live site `https://beta.pocketnexus.app/` (outbound fetch was blocked).
 - The Supabase project `cdmzrsvwztndqfwzsumo` (no credentials; intentionally not requested).
 - Deployed Edge Function source that is not in the repository (see §6).
@@ -18,14 +19,14 @@ the live project before any migration work.
 
 ## 1. Framework and dependencies
 
-| Aspect | Finding |
-| --- | --- |
-| Build system | **None.** Plain static site: `index.html` + 60 `<script defer>` tags + 14 stylesheets. No `package.json`, bundler, or lockfile. |
-| Language | Untyped browser JavaScript (≈1.9 MB across 120 files; several files exceed 100 kB, `js/data/meta-data.js` is 240 kB). |
-| CSS | 50+ files (≈3,800 lines), most named after the patch that introduced them (`*-hotfix-v8.64.1.css`, `pass3b-*.css`, `ui2-*`). |
-| Runtime deps | `@supabase/supabase-js@2` loaded unpinned from jsDelivr (`…/supabase-js@2`) and esm.sh in edge functions. |
-| PWA | `sw.js` service worker (cache `v8.65.1-branding-hotfix2`), `manifest.webmanifest`, `offline.html`. |
-| Cache busting | Manual `?v=864217`-style query strings per script. |
+| Aspect        | Finding                                                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Build system  | **None.** Plain static site: `index.html` + 60 `<script defer>` tags + 14 stylesheets. No `package.json`, bundler, or lockfile. |
+| Language      | Untyped browser JavaScript (≈1.9 MB across 120 files; several files exceed 100 kB, `js/data/meta-data.js` is 240 kB).           |
+| CSS           | 50+ files (≈3,800 lines), most named after the patch that introduced them (`*-hotfix-v8.64.1.css`, `pass3b-*.css`, `ui2-*`).    |
+| Runtime deps  | `@supabase/supabase-js@2` loaded unpinned from jsDelivr (`…/supabase-js@2`) and esm.sh in edge functions.                       |
+| PWA           | `sw.js` service worker (cache `v8.65.1-branding-hotfix2`), `manifest.webmanifest`, `offline.html`.                              |
+| Cache busting | Manual `?v=864217`-style query strings per script.                                                                              |
 
 ## 2. Application modules
 
@@ -85,16 +86,16 @@ Relationships visible in code (unverified): most user tables are keyed by the au
 
 ## 6. External API integrations
 
-| Integration | Use | Risk |
-| --- | --- | --- |
-| `play.limitlesstcg.com` (360 references) | Tournament, standings, decklists, live tables | Terms of use / scraping permission unverified; heavy coupling |
-| `limitlesstcg.nyc3.cdn.digitaloceanspaces.com` | Card images | Hotlinking third-party assets |
-| `cdn.jsdelivr.net/npm/pokemon-tcg-pocket-database` | Card catalog JSON | Unpinned version; licence unverified |
-| `raw.githubusercontent.com/R4PH1/PTCGP-Data` | Card enrichment | Third-party repo, unpinned, licence unverified |
-| `pokemon-zone.com` | Card enrichment source | Terms unverified |
-| `api.openai.com` | Pocket Coach (server-side) | Cost / abuse controls not reviewed |
-| `api.qrserver.com` | QR codes for overlays | Leaks overlay URLs to a third party |
-| `cdn.jsdelivr.net/gh/RealityGlitxh/pocket-companion-beta` | Serves the repo itself via CDN | Any pushed file is publicly cached |
+| Integration                                               | Use                                           | Risk                                                          |
+| --------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------- |
+| `play.limitlesstcg.com` (360 references)                  | Tournament, standings, decklists, live tables | Terms of use / scraping permission unverified; heavy coupling |
+| `limitlesstcg.nyc3.cdn.digitaloceanspaces.com`            | Card images                                   | Hotlinking third-party assets                                 |
+| `cdn.jsdelivr.net/npm/pokemon-tcg-pocket-database`        | Card catalog JSON                             | Unpinned version; licence unverified                          |
+| `raw.githubusercontent.com/R4PH1/PTCGP-Data`              | Card enrichment                               | Third-party repo, unpinned, licence unverified                |
+| `pokemon-zone.com`                                        | Card enrichment source                        | Terms unverified                                              |
+| `api.openai.com`                                          | Pocket Coach (server-side)                    | Cost / abuse controls not reviewed                            |
+| `api.qrserver.com`                                        | QR codes for overlays                         | Leaks overlay URLs to a third party                           |
+| `cdn.jsdelivr.net/gh/RealityGlitxh/pocket-companion-beta` | Serves the repo itself via CDN                | Any pushed file is publicly cached                            |
 
 Edge functions **called** by the client or CI: `limitless-refresh`, `meta-import`, `meta-live`,
 `meta-snapshot`, `pocket-coach`, `rank-border-live`. Only `limitless-refresh`,
@@ -136,6 +137,7 @@ Edge functions **called** by the client or CI: `limitless-refresh`, `meta-import
 ## 10. Potential migration requirements
 
 See [MIGRATION_STRATEGY.md](./MIGRATION_STRATEGY.md). In short, before any data moves:
+
 - Export the live schema (`supabase db dump --schema-only`) and RLS policies — read-only.
 - Take and **test-restore** a full backup into a scratch project.
 - Map user-owned tables (`profiles`, `cloud_decks`, `cloud_matches`, `cloud_preferences`,

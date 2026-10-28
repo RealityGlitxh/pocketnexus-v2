@@ -4,7 +4,12 @@ import { CheckCircle2, Loader2, MinusCircle, XCircle, type LucideIcon } from 'lu
 import { useAuth } from '@/features/auth';
 import { env } from '@/lib/env';
 import { checkBackendHealth } from '@/services/health.service';
-import { deriveIndicators, type CheckStatus, type HealthInput, type Indicator } from './statusIndicators';
+import {
+  deriveIndicators,
+  type CheckStatus,
+  type HealthInput,
+  type Indicator,
+} from './statusIndicators';
 
 const statusUi: Record<CheckStatus, { icon: LucideIcon; text: string; className: string }> = {
   ok: { icon: CheckCircle2, text: 'OK', className: 'text-success-text' },
@@ -43,16 +48,23 @@ export function SystemStatus() {
 
   let healthInput: HealthInput = null;
   if (configured) {
-    if (health.isPending) healthInput = { status: 'pending' };
-    else if (health.data?.ok) healthInput = { status: 'ok', latencyMs: health.data.value.latencyMs };
-    else
-      healthInput = {
-        status: 'failed',
-        message: health.data && !health.data.ok ? health.data.error.message : 'The backend could not be reached.',
-      };
+    const result = health.data;
+    if (result === undefined) {
+      healthInput = health.isPending
+        ? { status: 'pending' }
+        : { status: 'failed', message: 'The backend could not be reached.' };
+    } else if (result.ok) {
+      healthInput = { status: 'ok', latencyMs: result.value.latencyMs };
+    } else {
+      healthInput = { status: 'failed', message: result.error.message };
+    }
   }
 
-  const indicators = deriveIndicators({ configStatus: env.supabase.status, health: healthInput, auth: state });
+  const indicators = deriveIndicators({
+    configStatus: env.supabase.status,
+    health: healthInput,
+    auth: state,
+  });
 
   return (
     <section aria-labelledby="status-heading">

@@ -1,35 +1,13 @@
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react';
+import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { cn, focusRing } from '../lib/cn';
-
-export type ToastTone = 'info' | 'success' | 'warning' | 'danger';
-
-export interface ToastOptions {
-  title: string;
-  description?: string;
-  tone?: ToastTone;
-  /** ms; defaults to 5000. Errors default to 8000 so they can be read. */
-  duration?: number;
-}
+import { ToastContext, type ToastOptions, type ToastTone } from './toastContext';
 
 interface ToastItem extends Required<Pick<ToastOptions, 'title' | 'tone' | 'duration'>> {
   id: number;
   description: string | undefined;
 }
-
-interface ToastContextValue {
-  toast: (options: ToastOptions) => void;
-}
-
-const ToastContext = createContext<ToastContextValue | null>(null);
 
 const toneStyles: Record<ToastTone, { icon: typeof Info; className: string }> = {
   info: { icon: Info, className: 'text-accent-text' },
@@ -109,10 +87,4 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       </ToastPrimitive.Provider>
     </ToastContext.Provider>
   );
-}
-
-export function useToast(): ToastContextValue {
-  const ctx = useContext(ToastContext);
-  if (!ctx) throw new Error('useToast must be used inside <ToastProvider>.');
-  return ctx;
 }

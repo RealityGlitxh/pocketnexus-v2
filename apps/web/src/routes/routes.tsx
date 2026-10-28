@@ -20,14 +20,38 @@ export const routes: RouteObject[] = [
       {
         errorElement: <RouteErrorBoundary />,
         children: [
-          { index: true, lazy: async () => ({ Component: (await import('@/features/dashboard')).DashboardPage }) },
-          { path: 'cards', lazy: async () => ({ Component: (await import('@/features/cards')).CardsPage }) },
-          { path: 'decks', lazy: async () => ({ Component: (await import('@/features/decks')).DecksPage }) },
-          { path: 'battles', lazy: async () => ({ Component: (await import('@/features/battles')).BattlesPage }) },
-          { path: 'meta', lazy: async () => ({ Component: (await import('@/features/meta')).MetaPage }) },
-          { path: 'profile', lazy: async () => ({ Component: (await import('@/features/profile')).ProfilePage }) },
-          { path: 'settings', lazy: async () => ({ Component: (await import('@/features/settings')).SettingsPage }) },
-          { path: '*', lazy: async () => ({ Component: (await import('@/pages/NotFoundPage')).NotFoundPage }) },
+          {
+            index: true,
+            lazy: async () => ({ Component: (await import('@/features/dashboard')).DashboardPage }),
+          },
+          {
+            path: 'cards',
+            lazy: async () => ({ Component: (await import('@/features/cards')).CardsPage }),
+          },
+          {
+            path: 'decks',
+            lazy: async () => ({ Component: (await import('@/features/decks')).DecksPage }),
+          },
+          {
+            path: 'battles',
+            lazy: async () => ({ Component: (await import('@/features/battles')).BattlesPage }),
+          },
+          {
+            path: 'meta',
+            lazy: async () => ({ Component: (await import('@/features/meta')).MetaPage }),
+          },
+          {
+            path: 'profile',
+            lazy: async () => ({ Component: (await import('@/features/profile')).ProfilePage }),
+          },
+          {
+            path: 'settings',
+            lazy: async () => ({ Component: (await import('@/features/settings')).SettingsPage }),
+          },
+          {
+            path: '*',
+            lazy: async () => ({ Component: (await import('@/pages/NotFoundPage')).NotFoundPage }),
+          },
         ],
       },
     ],
@@ -37,15 +61,29 @@ export const routes: RouteObject[] = [
     element: <AuthLayout />,
     errorElement: <RouteErrorBoundary />,
     children: [
-      { path: 'sign-in', lazy: async () => ({ Component: (await import('@/features/auth/pages/SignInPage')).SignInPage }) },
-      { path: 'sign-up', lazy: async () => ({ Component: (await import('@/features/auth/pages/SignUpPage')).SignUpPage }) },
+      {
+        path: 'sign-in',
+        lazy: async () => ({
+          Component: (await import('@/features/auth/pages/SignInPage')).SignInPage,
+        }),
+      },
+      {
+        path: 'sign-up',
+        lazy: async () => ({
+          Component: (await import('@/features/auth/pages/SignUpPage')).SignUpPage,
+        }),
+      },
       {
         path: 'forgot-password',
-        lazy: async () => ({ Component: (await import('@/features/auth/pages/ForgotPasswordPage')).ForgotPasswordPage }),
+        lazy: async () => ({
+          Component: (await import('@/features/auth/pages/ForgotPasswordPage')).ForgotPasswordPage,
+        }),
       },
       {
         path: 'update-password',
-        lazy: async () => ({ Component: (await import('@/features/auth/pages/UpdatePasswordPage')).UpdatePasswordPage }),
+        lazy: async () => ({
+          Component: (await import('@/features/auth/pages/UpdatePasswordPage')).UpdatePasswordPage,
+        }),
       },
     ],
   },

@@ -47,11 +47,20 @@ export function RouteErrorBoundary() {
 
   // A failed lazy chunk usually means a new deploy replaced old assets.
   const chunkFailed =
-    error instanceof Error && /Failed to fetch dynamically imported module|Importing a module script failed/i.test(error.message);
+    error instanceof Error &&
+    /Failed to fetch dynamically imported module|Importing a module script failed/i.test(
+      error.message,
+    );
 
   return (
     <ErrorState
-      title={notFound ? 'Page not found' : chunkFailed ? 'A new version is available' : 'This page failed to load'}
+      title={
+        notFound
+          ? 'Page not found'
+          : chunkFailed
+            ? 'A new version is available'
+            : 'This page failed to load'
+      }
       description={
         notFound
           ? 'The page you were looking for does not exist.'

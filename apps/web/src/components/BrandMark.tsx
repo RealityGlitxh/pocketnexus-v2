@@ -2,7 +2,13 @@ import { APP_NAME } from '@pocketnexus/shared';
 import { cn } from '@pocketnexus/ui';
 import { useId } from 'react';
 
-export function BrandMark({ className, compact = false }: { className?: string; compact?: boolean }) {
+export function BrandMark({
+  className,
+  compact = false,
+}: {
+  className?: string;
+  compact?: boolean;
+}) {
   // Unique per instance: the sidebar copy is display:none on mobile, and an SVG
   // gradient defined inside a hidden subtree does not render for other copies.
   const gradientId = `pn-brand-${useId().replace(/[^A-Za-z0-9_-]/g, '')}`;
@@ -27,7 +33,9 @@ export function BrandMark({ className, compact = false }: { className?: string; 
         <circle cx="22.5" cy="22.5" r="2.5" className="fill-accent" />
       </svg>
       <span className="flex min-w-0 flex-col leading-none">
-        <span className="truncate font-display text-base font-bold tracking-tight text-fg">{APP_NAME}</span>
+        <span className="truncate font-display text-base font-bold tracking-tight text-fg">
+          {APP_NAME}
+        </span>
         {compact ? null : (
           <span className="text-2xs font-medium tracking-widest text-fg-subtle uppercase">
             Unofficial companion

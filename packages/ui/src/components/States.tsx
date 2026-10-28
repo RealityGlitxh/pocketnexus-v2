@@ -36,7 +36,13 @@ interface StateProps {
   className?: string;
 }
 
-export function EmptyState({ title, description, icon: Icon = Inbox, action, className }: StateProps) {
+export function EmptyState({
+  title,
+  description,
+  icon: Icon = Inbox,
+  action,
+  className,
+}: StateProps) {
   return (
     <div
       className={cn(

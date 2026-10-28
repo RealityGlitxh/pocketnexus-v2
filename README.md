@@ -35,19 +35,19 @@ project (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)).
 
 ## Commands
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Dev server |
-| `pnpm build` / `pnpm preview` | Production build / serve it on :4173 |
-| `pnpm typecheck` | `tsc` in every package |
-| `pnpm lint` / `pnpm format` | ESLint (type-aware) / Prettier |
-| `pnpm test` | Vitest unit + component tests |
-| `pnpm test:e2e` | Playwright on desktop, tablet, mobile + axe accessibility scan |
-| `pnpm db:test` | Apply migrations to a throwaway local Postgres DB and run RLS tests |
-| `pnpm check:bundle` | Enforce gzip bundle budgets |
-| `pnpm check:secrets` | Scan source and build output for leaked credentials |
-| `node scripts/check-contrast.mjs` | Verify WCAG contrast of design tokens |
-| `pnpm verify` | Everything CI runs except e2e and DB |
+| Command                           | What it does                                                        |
+| --------------------------------- | ------------------------------------------------------------------- |
+| `pnpm dev`                        | Dev server                                                          |
+| `pnpm build` / `pnpm preview`     | Production build / serve it on :4173                                |
+| `pnpm typecheck`                  | `tsc` in every package                                              |
+| `pnpm lint` / `pnpm format`       | ESLint (type-aware) / Prettier                                      |
+| `pnpm test`                       | Vitest unit + component tests                                       |
+| `pnpm test:e2e`                   | Playwright on desktop, tablet, mobile + axe accessibility scan      |
+| `pnpm db:test`                    | Apply migrations to a throwaway local Postgres DB and run RLS tests |
+| `pnpm check:bundle`               | Enforce gzip bundle budgets                                         |
+| `pnpm check:secrets`              | Scan source and build output for leaked credentials                 |
+| `node scripts/check-contrast.mjs` | Verify WCAG contrast of design tokens                               |
+| `pnpm verify`                     | Everything CI runs except e2e and DB                                |
 
 ## Layout
 

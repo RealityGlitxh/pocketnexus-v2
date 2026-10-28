@@ -5,4 +5,4 @@ import { parseClientEnv, type ParsedClientEnv } from '@pocketnexus/shared';
  * A misconfigured build renders an explicit "not configured" state rather
  * than failing silently or talking to the wrong backend.
  */
-export const env: ParsedClientEnv = parseClientEnv(import.meta.env as Record<string, unknown>);
+export const env: ParsedClientEnv = parseClientEnv(import.meta.env);

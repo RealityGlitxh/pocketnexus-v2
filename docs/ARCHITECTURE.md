@@ -25,17 +25,17 @@ apps/web ──▶ packages/ui ──▶ (react, radix, lucide)
 
 ## Stack decisions
 
-| Choice | Why | Trade-off |
-| --- | --- | --- |
-| **React + TypeScript strict** (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`) | Catches whole classes of V8 regressions at compile time | More verbose types |
-| **Vite** | Fast dev server, Rollup builds, native code splitting | — |
-| **Tailwind v4 + CSS-variable tokens** | One token source; semantic utilities; tiny CSS | Utility-class verbosity; mitigated by `cva` variants in `ui` |
-| **Radix primitives** for Dialog/Dropdown/Tabs/Toast | Correct focus management and ARIA out of the box | +~25 kB gz across lazily-used chunks |
-| **React Router 7 data router** with `lazy` routes | Per-route code splitting, route-level error boundaries | — |
-| **TanStack Query** | Caching, dedupe, retries; user-scoped keys purgeable on sign-out | — |
-| **Supabase** (Postgres + Auth + Storage + RLS) | Same vendor as V8 (team familiarity); RLS keeps authorization in the DB | Vendor coupling; mitigated by service layer |
-| **pnpm workspaces, no Turborepo/Nx** | Enough for 1 app + 3 packages; zero extra tooling | Add Turborepo only if build times demand it |
-| **Source-only internal packages** (exports point at `.ts`) | No package build step; Vite compiles them | Packages can't be published as-is (not a goal) |
+| Choice                                                                                   | Why                                                                     | Trade-off                                                    |
+| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------ |
+| **React + TypeScript strict** (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`) | Catches whole classes of V8 regressions at compile time                 | More verbose types                                           |
+| **Vite**                                                                                 | Fast dev server, Rollup builds, native code splitting                   | —                                                            |
+| **Tailwind v4 + CSS-variable tokens**                                                    | One token source; semantic utilities; tiny CSS                          | Utility-class verbosity; mitigated by `cva` variants in `ui` |
+| **Radix primitives** for Dialog/Dropdown/Tabs/Toast                                      | Correct focus management and ARIA out of the box                        | +~25 kB gz across lazily-used chunks                         |
+| **React Router 7 data router** with `lazy` routes                                        | Per-route code splitting, route-level error boundaries                  | —                                                            |
+| **TanStack Query**                                                                       | Caching, dedupe, retries; user-scoped keys purgeable on sign-out        | —                                                            |
+| **Supabase** (Postgres + Auth + Storage + RLS)                                           | Same vendor as V8 (team familiarity); RLS keeps authorization in the DB | Vendor coupling; mitigated by service layer                  |
+| **pnpm workspaces, no Turborepo/Nx**                                                     | Enough for 1 app + 3 packages; zero extra tooling                       | Add Turborepo only if build times demand it                  |
+| **Source-only internal packages** (exports point at `.ts`)                               | No package build step; Vite compiles them                               | Packages can't be published as-is (not a goal)               |
 
 No stack changes from the brief were made.
 
@@ -83,11 +83,11 @@ Rules:
 
 Enforced by `scripts/check-bundle-budget.mjs` in CI (gzip):
 
-| Budget | Limit | How measured |
-| --- | --- | --- |
-| Initial JS (entry + modulepreloads) | ≤ 170 kB | Parsed from `dist/index.html` |
-| Any lazy chunk | ≤ 80 kB | Every other `.js` in `dist/assets` |
-| Total CSS | ≤ 30 kB | All `.css` |
+| Budget                              | Limit    | How measured                       |
+| ----------------------------------- | -------- | ---------------------------------- |
+| Initial JS (entry + modulepreloads) | ≤ 170 kB | Parsed from `dist/index.html`      |
+| Any lazy chunk                      | ≤ 80 kB  | Every other `.js` in `dist/assets` |
+| Total CSS                           | ≤ 30 kB  | All `.css`                         |
 
 Planned runtime budgets (Phase 1, Lighthouse CI on staging, mobile profile): LCP ≤ 2.5 s,
 CLS ≤ 0.1, INP ≤ 200 ms, TBT ≤ 200 ms.

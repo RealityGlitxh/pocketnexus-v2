@@ -22,7 +22,9 @@ describe('signUpSchema', () => {
   });
 
   it('rejects weak passwords and bad usernames', () => {
-    expect(signUpSchema.safeParse({ ...valid, password: 'short', confirmPassword: 'short' }).success).toBe(false);
+    expect(
+      signUpSchema.safeParse({ ...valid, password: 'short', confirmPassword: 'short' }).success,
+    ).toBe(false);
     expect(signUpSchema.safeParse({ ...valid, username: 'no spaces!' }).success).toBe(false);
   });
 });
@@ -50,7 +52,10 @@ describe('deck validation', () => {
   });
 
   it('caps copies at the schema level', () => {
-    const r = deckDraftSchema.safeParse({ name: 'Test', cards: [{ cardId: 'A1-001', quantity: 3 }] });
+    const r = deckDraftSchema.safeParse({
+      name: 'Test',
+      cards: [{ cardId: 'A1-001', quantity: 3 }],
+    });
     expect(r.success).toBe(false);
   });
 });
@@ -58,7 +63,11 @@ describe('deck validation', () => {
 describe('matchRecordInputSchema', () => {
   it('requires an offset timestamp', () => {
     const base = { result: 'win', mode: 'ranked' } as const;
-    expect(matchRecordInputSchema.safeParse({ ...base, playedAt: '2026-10-28T10:00:00Z' }).success).toBe(true);
-    expect(matchRecordInputSchema.safeParse({ ...base, playedAt: 'yesterday' }).success).toBe(false);
+    expect(
+      matchRecordInputSchema.safeParse({ ...base, playedAt: '2026-10-28T10:00:00Z' }).success,
+    ).toBe(true);
+    expect(matchRecordInputSchema.safeParse({ ...base, playedAt: 'yesterday' }).success).toBe(
+      false,
+    );
   });
 });

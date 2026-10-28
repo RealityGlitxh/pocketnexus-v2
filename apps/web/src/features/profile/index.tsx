@@ -1,4 +1,12 @@
-import { Badge, Card, CardContent, CardHeader, CardTitle, ErrorState, Skeleton } from '@pocketnexus/ui';
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  ErrorState,
+  Skeleton,
+} from '@pocketnexus/ui';
 import { useQuery } from '@tanstack/react-query';
 import { UserRound } from 'lucide-react';
 import { PageHeader } from '@/components/PageHeader';

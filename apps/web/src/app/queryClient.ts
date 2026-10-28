@@ -11,7 +11,8 @@ export function createQueryClient(): QueryClient {
         staleTime: 60_000,
         gcTime: 5 * 60_000,
         retry: (failureCount, error) =>
-          failureCount < 2 && !(error instanceof Error && /permission|not found/i.test(error.message)),
+          failureCount < 2 &&
+          !(error instanceof Error && /permission|not found/i.test(error.message)),
         refetchOnWindowFocus: false,
       },
       mutations: { retry: 0 },

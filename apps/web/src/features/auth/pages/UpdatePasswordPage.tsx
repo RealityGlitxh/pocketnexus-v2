@@ -1,6 +1,6 @@
 import { passwordUpdateSchema } from '@pocketnexus/shared';
 import { Button, Spinner, TextField, useToast } from '@pocketnexus/ui';
-import { useState, type FormEvent } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { updatePassword } from '@/services/auth.service';
 import { AuthFormShell, FormError } from '../AuthFormShell';
@@ -22,7 +22,7 @@ export function UpdatePasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  async function onSubmit(e: FormEvent) {
+  async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormError(null);
     const values = validate();
@@ -50,9 +50,9 @@ export function UpdatePasswordPage() {
     return (
       <AuthFormShell title="Link expired or invalid">
         <p className="text-sm text-fg-muted">
-          This password reset link is no longer valid. Links expire after one hour, can only be
-          used once, and must be opened in the same browser where you requested the reset.
-          Request a new one to continue.
+          This password reset link is no longer valid. Links expire after one hour, can only be used
+          once, and must be opened in the same browser where you requested the reset. Request a new
+          one to continue.
         </p>
         <Button asChild variant="secondary">
           <Link to="/auth/forgot-password">Request a new link</Link>

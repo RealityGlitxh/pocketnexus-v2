@@ -1,10 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-const envState = vi.hoisted(() => ({
-  supabase: { status: 'missing' } as
-    | { status: 'missing' }
-    | { status: 'configured'; url: string; publishableKey: string },
-}));
+type SupabaseState =
+  | { status: 'missing' }
+  | { status: 'configured'; url: string; publishableKey: string };
+
+const envState = vi.hoisted(() => {
+  const state: { supabase: SupabaseState } = { supabase: { status: 'missing' } };
+  return state;
+});
 
 vi.mock('@/lib/env', () => ({
   get env() {
@@ -31,7 +34,8 @@ describe('checkBackendHealth', () => {
   it('does not make a request when Supabase is not configured', async () => {
     const fetchImpl = vi.fn<typeof fetch>();
     const r = await checkBackendHealth(fetchImpl);
-    expect(r).toEqual({ ok: false, error: expect.objectContaining({ code: 'not_configured' }) });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error.code).toBe('not_configured');
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
@@ -41,13 +45,18 @@ describe('checkBackendHealth', () => {
     const r = await checkBackendHealth(fetchImpl);
     expect(r.ok).toBe(true);
     const [url, init] = fetchImpl.mock.calls[0]!;
-    expect(String(url)).toBe('https://abcdefghijklmnop.supabase.co/auth/v1/health');
+    expect(url).toBeInstanceOf(URL);
+    expect(url instanceof URL ? url.href : null).toBe(
+      'https://abcdefghijklmnop.supabase.co/auth/v1/health',
+    );
     expect(init?.headers).toEqual({ apikey: 'sb_publishable_test' });
   });
 
   it('reports HTTP errors as unreachable with a safe message', async () => {
     configure();
-    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response('nope', { status: 503 }));
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(new Response('nope', { status: 503 }));
     const r = await checkBackendHealth(fetchImpl);
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.error.message).toBe('The backend responded with an error (HTTP 503).');
@@ -55,7 +64,9 @@ describe('checkBackendHealth', () => {
 
   it('reports network failures without leaking the raw error', async () => {
     configure();
-    const fetchImpl = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('Failed to fetch: secret detail'));
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockRejectedValue(new TypeError('Failed to fetch: secret detail'));
     const r = await checkBackendHealth(fetchImpl);
     expect(r.ok).toBe(false);
     if (!r.ok) {

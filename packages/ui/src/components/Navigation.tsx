@@ -44,7 +44,14 @@ export interface NavItemProps extends HTMLAttributes<HTMLElement> {
   children: ReactElement<{ children?: ReactNode }>;
 }
 
-export function NavItem({ icon: Icon, label, trailing, children, className, ...props }: NavItemProps) {
+export function NavItem({
+  icon: Icon,
+  label,
+  trailing,
+  children,
+  className,
+  ...props
+}: NavItemProps) {
   const content = (
     <>
       <Icon

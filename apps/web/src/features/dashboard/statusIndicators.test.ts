@@ -7,12 +7,24 @@ const statuses = (r: ReturnType<typeof deriveIndicators>) => r.map((i) => `${i.l
 
 describe('deriveIndicators', () => {
   it('missing config: configured fails, the rest are skipped (never "connected")', () => {
-    const r = deriveIndicators({ configStatus: 'missing', health: null, auth: { status: 'disabled', reason: 'missing' } });
-    expect(statuses(r)).toEqual(['Configured=failed', 'Reachable=skipped', 'Authenticated=skipped']);
+    const r = deriveIndicators({
+      configStatus: 'missing',
+      health: null,
+      auth: { status: 'disabled', reason: 'missing' },
+    });
+    expect(statuses(r)).toEqual([
+      'Configured=failed',
+      'Reachable=skipped',
+      'Authenticated=skipped',
+    ]);
   });
 
   it('invalid config is reported as invalid, not missing', () => {
-    const r = deriveIndicators({ configStatus: 'invalid', health: null, auth: { status: 'disabled', reason: 'invalid' } });
+    const r = deriveIndicators({
+      configStatus: 'invalid',
+      health: null,
+      auth: { status: 'disabled', reason: 'invalid' },
+    });
     expect(r[0].detail).toMatch(/invalid/);
   });
 
@@ -34,17 +46,29 @@ describe('deriveIndicators', () => {
   });
 
   it('reachable and signed in: all three OK', () => {
-    const r = deriveIndicators({ configStatus: 'configured', health: { status: 'ok', latencyMs: 10 }, auth: signedIn });
+    const r = deriveIndicators({
+      configStatus: 'configured',
+      health: { status: 'ok', latencyMs: 10 },
+      auth: signedIn,
+    });
     expect(statuses(r)).toEqual(['Configured=ok', 'Reachable=ok', 'Authenticated=ok']);
   });
 
   it('shows pending states while checks run', () => {
-    const r = deriveIndicators({ configStatus: 'configured', health: { status: 'pending' }, auth: { status: 'loading' } });
+    const r = deriveIndicators({
+      configStatus: 'configured',
+      health: { status: 'pending' },
+      auth: { status: 'loading' },
+    });
     expect(statuses(r)).toEqual(['Configured=ok', 'Reachable=pending', 'Authenticated=pending']);
   });
 
   it('session check errors are failures, not "signed out"', () => {
-    const r = deriveIndicators({ configStatus: 'configured', health: { status: 'ok', latencyMs: 5 }, auth: { status: 'error' } });
+    const r = deriveIndicators({
+      configStatus: 'configured',
+      health: { status: 'ok', latencyMs: 5 },
+      auth: { status: 'error' },
+    });
     expect(r[2].status).toBe('failed');
   });
 });

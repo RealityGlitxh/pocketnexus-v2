@@ -16,7 +16,11 @@ export const userIdOf = (state: AuthState): string | null =>
 export function nextAuthState(prev: AuthState, session: SessionLike | null): AuthState {
   if (!session) return prev.status === 'signed_out' ? prev : { status: 'signed_out' };
   const email = session.user.email ?? null;
-  if (prev.status === 'signed_in' && prev.user.id === session.user.id && prev.user.email === email) {
+  if (
+    prev.status === 'signed_in' &&
+    prev.user.id === session.user.id &&
+    prev.user.email === email
+  ) {
     return prev;
   }
   return { status: 'signed_in', user: { id: session.user.id, email } };

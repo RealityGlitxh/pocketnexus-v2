@@ -5,13 +5,17 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const css = readFileSync(fileURLToPath(new URL('../packages/ui/src/tokens/tokens.css', import.meta.url)), 'utf8');
+const css = readFileSync(
+  fileURLToPath(new URL('../packages/ui/src/tokens/tokens.css', import.meta.url)),
+  'utf8',
+);
 
 function block(selectorRegex) {
   const m = css.match(selectorRegex);
   if (!m) throw new Error(`Theme block not found: ${selectorRegex}`);
   const vars = {};
-  for (const [, name, value] of m[1].matchAll(/--pn-([\w-]+):\s*([^;]+);/g)) vars[name] = value.trim();
+  for (const [, name, value] of m[1].matchAll(/--pn-([\w-]+):\s*([^;]+);/g))
+    vars[name] = value.trim();
   return vars;
 }
 
@@ -80,11 +84,15 @@ for (const [name, t] of Object.entries(themes)) {
   for (const [fg, bgSpec, min, desc] of PAIRS) {
     const [bgName, under] = bgSpec.split('@');
     const underColor = under ? parse(t[under]) : null;
-    const bg = under ? parse(t[bgName], `#${underColor.map((v) => v.toString(16).padStart(2, '0')).join('')}`) : parse(t[bgName]);
+    const bg = under
+      ? parse(t[bgName], `#${underColor.map((v) => v.toString(16).padStart(2, '0')).join('')}`)
+      : parse(t[bgName]);
     const r = ratio(parse(t[fg]), bg);
     const ok = r >= min;
     if (!ok) failed++;
-    console.log(`  ${ok ? 'PASS' : 'FAIL'}  ${r.toFixed(2).padStart(5)}:1  (min ${min})  ${fg} on ${bgSpec} — ${desc}`);
+    console.log(
+      `  ${ok ? 'PASS' : 'FAIL'}  ${r.toFixed(2).padStart(5)}:1  (min ${min})  ${fg} on ${bgSpec} — ${desc}`,
+    );
   }
 }
 if (failed) {

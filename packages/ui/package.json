@@ -8,7 +8,8 @@
   ],
   "exports": {
     ".": "./src/index.ts",
-    "./tokens.css": "./src/tokens/tokens.css"
+    "./tokens.css": "./src/tokens/tokens.css",
+    "./testing": "./src/test/jsdomPolyfills.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

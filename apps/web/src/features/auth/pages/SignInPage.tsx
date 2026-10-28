@@ -1,6 +1,6 @@
 import { signInSchema } from '@pocketnexus/shared';
 import { Button, TextField } from '@pocketnexus/ui';
-import { useState, type FormEvent } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import { signIn } from '@/services/auth.service';
 import { AuthFormShell, FormError } from '../AuthFormShell';
@@ -19,7 +19,7 @@ export function SignInPage() {
 
   if (state.status === 'signed_in') return <Navigate to={returnTo} replace />;
 
-  async function onSubmit(e: FormEvent) {
+  async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormError(null);
     const values = validate();

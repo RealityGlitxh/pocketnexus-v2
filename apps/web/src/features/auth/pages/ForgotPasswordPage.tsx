@@ -1,6 +1,6 @@
 import { passwordResetRequestSchema } from '@pocketnexus/shared';
 import { Button, TextField } from '@pocketnexus/ui';
-import { useState, type FormEvent } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 import { Link } from 'react-router';
 import { requestPasswordReset } from '@/services/auth.service';
 import { AuthFormShell, FormError } from '../AuthFormShell';
@@ -14,7 +14,7 @@ export function ForgotPasswordPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
-  async function onSubmit(e: FormEvent) {
+  async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormError(null);
     const values = validate();

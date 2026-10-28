@@ -6,9 +6,12 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
  * The env module is replaced per test; the Supabase SDK module is replaced
  * with a tripwire so we can prove it is never imported in either case.
  */
-const envState = vi.hoisted(() => ({
-  supabase: { status: 'missing' } as { status: 'missing' } | { status: 'invalid'; issues: string[] },
-}));
+type SupabaseState = { status: 'missing' } | { status: 'invalid'; issues: string[] };
+
+const envState = vi.hoisted(() => {
+  const state: { supabase: SupabaseState } = { supabase: { status: 'missing' } };
+  return state;
+});
 const sdk = vi.hoisted(() => ({ imported: false }));
 
 vi.mock('@/lib/env', () => ({
@@ -28,7 +31,12 @@ afterEach(() => {
 });
 
 describe.each([
-  ['missing', { status: 'missing' } as const, /not connected/i, 'No backend configured for this build'],
+  [
+    'missing',
+    { status: 'missing' } as const,
+    /not connected/i,
+    'No backend configured for this build',
+  ],
   [
     'invalid',
     { status: 'invalid', issues: ['A Supabase SECRET key was supplied to the browser.'] } as const,
@@ -58,7 +66,9 @@ describe.each([
   it('protected routes explain instead of redirecting to a sign-in that cannot work', async () => {
     envState.supabase = supabase as typeof envState.supabase;
     const { router } = renderApp('/profile');
-    expect(await screen.findByRole('heading', { name: "Accounts aren't connected yet" })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: "Accounts aren't connected yet" }),
+    ).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/profile');
   });
 

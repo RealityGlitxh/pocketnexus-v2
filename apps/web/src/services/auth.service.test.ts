@@ -15,7 +15,12 @@ describe('auth.service without a configured backend', () => {
   it('reports not_configured for valid input', async () => {
     const results = await Promise.all([
       signIn({ email: 'a@example.com', password: 'whatever' }),
-      signUp({ email: 'a@example.com', username: 'trainer_a', password: 'pikachu12345', confirmPassword: 'pikachu12345' }),
+      signUp({
+        email: 'a@example.com',
+        username: 'trainer_a',
+        password: 'pikachu12345',
+        confirmPassword: 'pikachu12345',
+      }),
       requestPasswordReset({ email: 'a@example.com' }),
       updatePassword({ password: 'pikachu12345', confirmPassword: 'pikachu12345' }),
       signOut(),

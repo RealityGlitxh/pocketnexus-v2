@@ -38,8 +38,13 @@ describe('application shell', () => {
     const nav = screen.getAllByRole('navigation', { name: 'Primary' })[0]!;
     await userEvent.click(within(nav).getByRole('link', { name: /Deck Lab/ }));
     expect(await screen.findByRole('heading', { level: 1, name: 'Deck Lab' })).toBeInTheDocument();
-    expect(within(nav).getByRole('link', { name: /Deck Lab/ })).toHaveAttribute('aria-current', 'page');
-    expect(within(nav).getByRole('link', { name: /Dashboard/ })).not.toHaveAttribute('aria-current');
+    expect(within(nav).getByRole('link', { name: /Deck Lab/ })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(within(nav).getByRole('link', { name: /Dashboard/ })).not.toHaveAttribute(
+      'aria-current',
+    );
   });
 
   it('exposes every nav entry exactly once in the sidebar', async () => {
@@ -58,7 +63,9 @@ describe('application shell', () => {
     await userEvent.click(openBtn);
     const drawer = await screen.findByRole('dialog', { name: 'Navigation' });
     await userEvent.click(within(drawer).getByRole('link', { name: /Meta Center/ }));
-    expect(await screen.findByRole('heading', { level: 1, name: 'Meta Center' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Meta Center' }),
+    ).toBeInTheDocument();
     expect(screen.queryByRole('dialog', { name: 'Navigation' })).not.toBeInTheDocument();
   });
 
@@ -69,7 +76,9 @@ describe('application shell', () => {
 
   it('protected profile route explains that accounts are not connected', async () => {
     renderApp('/profile');
-    expect(await screen.findByRole('heading', { name: "Accounts aren't connected yet" })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: "Accounts aren't connected yet" }),
+    ).toBeInTheDocument();
   });
 
   it('auth forms are visibly disabled when no backend is configured', async () => {

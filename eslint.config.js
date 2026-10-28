@@ -42,7 +42,10 @@ export default tseslint.config(
       ...jsxA11y.flatConfigs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
-      '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
+      '@typescript-eslint/no-misused-promises': [
+        'error',
+        { checksVoidReturn: { attributes: false } },
+      ],
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
       // Design-system guardrail: no inline style objects outside the ui package.
       'no-restricted-syntax': [
@@ -71,10 +74,19 @@ export default tseslint.config(
     },
   },
   {
-    // Tooling and config files run in Node and are not part of the typed project.
-    files: ['**/*.{js,mjs,cjs}', '**/*.config.{js,ts}'],
+    // Plain JS (tooling scripts, config, public/ scripts) is not part of any
+    // tsconfig: switch off type-aware parsing as well as type-aware rules.
+    files: ['**/*.{js,mjs,cjs}'],
     ...tseslint.configs.disableTypeChecked,
-    languageOptions: { globals: { ...globals.node } },
+    languageOptions: {
+      parserOptions: { projectService: false, project: null },
+      globals: { ...globals.node },
+    },
+  },
+  {
+    // Browser scripts served as-is from public/.
+    files: ['apps/web/public/**/*.js'],
+    languageOptions: { globals: { ...globals.browser } },
   },
   {
     files: ['**/*.test.{ts,tsx}', '**/e2e/**'],
