@@ -2,11 +2,11 @@
 
 ## Environments
 
-| Env | Frontend | Supabase | Trigger |
-| --- | --- | --- | --- |
-| development | `pnpm dev` (localhost:5173) | `pocketnexus-v2-dev` (`shodljlzwfsuouignvkv`) or local CLI stack | Manual |
-| staging | Cloudflare Pages project `pocketnexus-v2-staging` → https://pocketnexus-v2-staging.pages.dev | `pocketnexus-v2-dev` (a separate staging project can replace it later) | CI on `main` → `deploy-staging.yml` |
-| production | _Not configured in Phase 0_ | _Not configured_ | — |
+| Env         | Frontend                                                                                     | Supabase                                                               | Trigger                             |
+| ----------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------- |
+| development | `pnpm dev` (localhost:5173)                                                                  | `pocketnexus-v2-dev` (`shodljlzwfsuouignvkv`) or local CLI stack       | Manual                              |
+| staging     | Cloudflare Pages project `pocketnexus-v2-staging` → https://pocketnexus-v2-staging.pages.dev | `pocketnexus-v2-dev` (a separate staging project can replace it later) | CI on `main` → `deploy-staging.yml` |
+| production  | _Not configured in Phase 0_                                                                  | _Not configured_                                                       | —                                   |
 
 **The legacy site `beta.pocketnexus.app` (GitHub Pages) and Supabase project
 `cdmzrsvwztndqfwzsumo` are never targets.** The env validator refuses that project ref, the secret
@@ -15,17 +15,17 @@ than `pocketnexus-v2-staging` and any Supabase URL containing the legacy ref.
 
 ## Current status (2026‑10‑28, Phase 0.3)
 
-| Step | Status |
-| --- | --- |
-| GitHub repository | ✅ `RealityGlitxh/pocketnexus-v2` |
-| Lockfile | ✅ pnpm 10.28.0; frozen install verified in CI |
-| CI on `main` | ✅ See the latest run on the Actions tab |
-| Deploy gate | ✅ Runs on every green `main` CI; skips with a notice until Cloudflare secrets exist |
-| Cloudflare Pages project `pocketnexus-v2-staging` | ⏳ **Owner action** (§3) |
-| Dev Supabase project | ✅ `pocketnexus-v2-dev`; 6 migrations; RLS verified on the hosted DB |
-| Dev auth URL configuration | ⏳ **Owner action** (§2) |
-| E2E test accounts + secrets | ⏳ **Owner action** (§4) |
-| Authenticated E2E on staging | ❌ Not run yet (needs §2–§4) |
+| Step                                              | Status                                                                               |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| GitHub repository                                 | ✅ `RealityGlitxh/pocketnexus-v2`                                                    |
+| Lockfile                                          | ✅ pnpm 10.28.0; frozen install verified in CI                                       |
+| CI on `main`                                      | ✅ See the latest run on the Actions tab                                             |
+| Deploy gate                                       | ✅ Runs on every green `main` CI; skips with a notice until Cloudflare secrets exist |
+| Cloudflare Pages project `pocketnexus-v2-staging` | ⏳ **Owner action** (§3)                                                             |
+| Dev Supabase project                              | ✅ `pocketnexus-v2-dev`; 6 migrations; RLS verified on the hosted DB                 |
+| Dev auth URL configuration                        | ⏳ **Owner action** (§2)                                                             |
+| E2E test accounts + secrets                       | ⏳ **Owner action** (§4)                                                             |
+| Authenticated E2E on staging                      | ❌ Not run yet (needs §2–§4)                                                         |
 
 ## One-time setup (owner)
 

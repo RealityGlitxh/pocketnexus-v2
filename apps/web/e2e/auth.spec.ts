@@ -12,11 +12,19 @@ import { expect, test, type Page } from '@playwright/test';
  * plus the public project URL / publishable key for the API-level RLS checks.
  * Without them the whole file is skipped (e.g. in pull-request CI).
  */
-const A = { email: process.env.E2E_USER_A_EMAIL ?? '', password: process.env.E2E_USER_A_PASSWORD ?? '' };
-const B = { email: process.env.E2E_USER_B_EMAIL ?? '', password: process.env.E2E_USER_B_PASSWORD ?? '' };
+const A = {
+  email: process.env.E2E_USER_A_EMAIL ?? '',
+  password: process.env.E2E_USER_A_PASSWORD ?? '',
+};
+const B = {
+  email: process.env.E2E_USER_B_EMAIL ?? '',
+  password: process.env.E2E_USER_B_PASSWORD ?? '',
+};
 const SUPABASE_URL = process.env.E2E_SUPABASE_URL ?? '';
 const SUPABASE_KEY = process.env.E2E_SUPABASE_PUBLISHABLE_KEY ?? '';
-const configured = Boolean(A.email && A.password && B.email && B.password && SUPABASE_URL && SUPABASE_KEY);
+const configured = Boolean(
+  A.email && A.password && B.email && B.password && SUPABASE_URL && SUPABASE_KEY,
+);
 
 test.skip(!configured, 'E2E test accounts / Supabase config not provided');
 
@@ -111,7 +119,11 @@ test.describe('row level security via the public API', () => {
       expect((await bob.from('decks').select('id').eq('id', deckId)).data).toEqual([]);
       expect((await anon.from('decks').select('id').eq('id', deckId)).data).toEqual([]);
 
-      const hijack = await bob.from('decks').update({ name: 'pwned' }).eq('id', deckId).select('id');
+      const hijack = await bob
+        .from('decks')
+        .update({ name: 'pwned' })
+        .eq('id', deckId)
+        .select('id');
       expect(hijack.data ?? []).toEqual([]);
       const wipe = await bob.from('decks').delete().eq('id', deckId).select('id');
       expect(wipe.data ?? []).toEqual([]);
@@ -124,11 +136,18 @@ test.describe('row level security via the public API', () => {
 
       const match = await alice
         .from('match_records')
-        .insert({ owner_id: aliceId, result: 'win', mode: 'casual', played_at: new Date().toISOString() })
+        .insert({
+          owner_id: aliceId,
+          result: 'win',
+          mode: 'casual',
+          played_at: new Date().toISOString(),
+        })
         .select('id')
         .single();
       expect(match.error).toBeNull();
-      expect((await bob.from('match_records').select('id').eq('id', match.data!.id)).data).toEqual([]);
+      expect((await bob.from('match_records').select('id').eq('id', match.data!.id)).data).toEqual(
+        [],
+      );
       await alice.from('match_records').delete().eq('id', match.data!.id);
 
       const still = await alice.from('decks').select('name').eq('id', deckId).single();
