@@ -1,0 +1,228 @@
+/*
+ * PocketNexus design tokens — the single source of truth for color, type,
+ * spacing, radius, elevation and motion.
+ *
+ * Layering:
+ *   1. Raw palette (--pn-*) defined per theme on :root / [data-theme].
+ *   2. Semantic Tailwind theme (@theme inline) maps roles → palette.
+ *   3. Components use ONLY semantic utilities (bg-surface, text-fg-muted…).
+ *
+ * Never use raw hex values or Tailwind's default palette (bg-violet-500 etc.)
+ * in components. Add a semantic token here instead.
+ *
+ * Contrast targets (WCAG 2.2 AA): text ≥ 4.5:1, UI boundaries/focus ≥ 3:1.
+ * Verified in both themes by `node scripts/check-contrast.mjs` (runs in CI).
+ */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Surfaces — cool near-black with a faint violet bias */
+  --pn-canvas: #0a0b12;
+  --pn-surface: #10121c;
+  --pn-surface-raised: #161927;
+  --pn-surface-overlay: #1c2031;
+  --pn-surface-sunken: #07080d;
+  --pn-border: #262b3f;
+  --pn-border-strong: #353b55;
+  --pn-border-input: #626a8a; /* form-control boundary: ≥ 3:1 on sunken/surface/overlay */
+
+  /* Text */
+  --pn-fg: #eceef6;
+  --pn-fg-muted: #a3a9c2;
+  --pn-fg-subtle: #767d99;
+  --pn-fg-inverse: #0a0b12;
+
+  /* Brand — restrained violet primary, electric-blue accent */
+  --pn-primary: #7c4dff;
+  --pn-primary-hover: #6d3ef7; /* deepens on hover so the label stays ≥ 4.5:1 */
+  --pn-primary-active: #5c30e3;
+  --pn-primary-soft: rgb(124 77 255 / 0.14);
+  --pn-primary-fg: #ffffff;
+  --pn-primary-text: #b39dff;
+
+  --pn-accent: #2f9bff;
+  --pn-accent-soft: rgb(47 155 255 / 0.14);
+  --pn-accent-text: #7cc0ff;
+
+  /* Status */
+  --pn-success: #2fbf71;
+  --pn-success-soft: rgb(47 191 113 / 0.14);
+  --pn-success-text: #6fdca0;
+  --pn-warning: #f0a92e;
+  --pn-warning-soft: rgb(240 169 46 / 0.14);
+  --pn-warning-text: #f6c46f;
+  --pn-danger: #ef4d5f;
+  --pn-danger-soft: rgb(239 77 95 / 0.14);
+  --pn-danger-text: #ff8c99;
+
+  --pn-focus: #8fc8ff;
+  --pn-scrim: rgb(4 5 10 / 0.72);
+
+  --pn-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --pn-shadow-md: 0 6px 20px -6px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.03);
+  --pn-shadow-lg: 0 24px 60px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.04);
+  --pn-glow-primary: 0 0 0 1px rgb(124 77 255 / 0.35), 0 8px 28px -8px rgb(124 77 255 / 0.55);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --pn-canvas: #f6f7fb;
+  --pn-surface: #ffffff;
+  --pn-surface-raised: #ffffff;
+  --pn-surface-overlay: #ffffff;
+  --pn-surface-sunken: #eceef5;
+  --pn-border: #dde0eb;
+  --pn-border-strong: #c5c9d8;
+  --pn-border-input: #80869c;
+
+  --pn-fg: #12141f;
+  --pn-fg-muted: #4b5168;
+  --pn-fg-subtle: #5f6580;
+  --pn-fg-inverse: #ffffff;
+
+  --pn-primary: #6a3df0;
+  --pn-primary-hover: #5a2fdc;
+  --pn-primary-active: #4c25c4;
+  --pn-primary-soft: rgb(106 61 240 / 0.1);
+  --pn-primary-fg: #ffffff;
+  --pn-primary-text: #5a2fdc;
+
+  --pn-accent: #0b74d6;
+  --pn-accent-soft: rgb(11 116 214 / 0.1);
+  --pn-accent-text: #0a63b8;
+
+  --pn-success: #18925a;
+  --pn-success-soft: rgb(24 146 90 / 0.1);
+  --pn-success-text: #12764a;
+  --pn-warning: #b9770a;
+  --pn-warning-soft: rgb(185 119 10 / 0.12);
+  --pn-warning-text: #8a5806;
+  --pn-danger: #d42a40;
+  --pn-danger-soft: rgb(212 42 64 / 0.1);
+  --pn-danger-text: #b0192e;
+
+  --pn-focus: #0b74d6;
+  --pn-scrim: rgb(18 20 31 / 0.45);
+
+  --pn-shadow-sm: 0 1px 2px rgb(18 20 31 / 0.08);
+  --pn-shadow-md: 0 6px 20px -8px rgb(18 20 31 / 0.18);
+  --pn-shadow-lg: 0 24px 60px -16px rgb(18 20 31 / 0.28);
+  --pn-glow-primary: 0 8px 24px -10px rgb(106 61 240 / 0.45);
+}
+
+@theme inline {
+  /* Color roles */
+  --color-canvas: var(--pn-canvas);
+  --color-surface: var(--pn-surface);
+  --color-surface-raised: var(--pn-surface-raised);
+  --color-surface-overlay: var(--pn-surface-overlay);
+  --color-surface-sunken: var(--pn-surface-sunken);
+  --color-border: var(--pn-border);
+  --color-border-strong: var(--pn-border-strong);
+  --color-border-input: var(--pn-border-input);
+
+  --color-fg: var(--pn-fg);
+  --color-fg-muted: var(--pn-fg-muted);
+  --color-fg-subtle: var(--pn-fg-subtle);
+  --color-fg-inverse: var(--pn-fg-inverse);
+
+  --color-primary: var(--pn-primary);
+  --color-primary-hover: var(--pn-primary-hover);
+  --color-primary-active: var(--pn-primary-active);
+  --color-primary-soft: var(--pn-primary-soft);
+  --color-primary-fg: var(--pn-primary-fg);
+  --color-primary-text: var(--pn-primary-text);
+
+  --color-accent: var(--pn-accent);
+  --color-accent-soft: var(--pn-accent-soft);
+  --color-accent-text: var(--pn-accent-text);
+
+  --color-success: var(--pn-success);
+  --color-success-soft: var(--pn-success-soft);
+  --color-success-text: var(--pn-success-text);
+  --color-warning: var(--pn-warning);
+  --color-warning-soft: var(--pn-warning-soft);
+  --color-warning-text: var(--pn-warning-text);
+  --color-danger: var(--pn-danger);
+  --color-danger-soft: var(--pn-danger-soft);
+  --color-danger-text: var(--pn-danger-text);
+
+  --color-focus: var(--pn-focus);
+  --color-scrim: var(--pn-scrim);
+
+  /* Elevation */
+  --shadow-sm: var(--pn-shadow-sm);
+  --shadow-md: var(--pn-shadow-md);
+  --shadow-lg: var(--pn-shadow-lg);
+  --shadow-glow: var(--pn-glow-primary);
+}
+
+@theme {
+  /* Typography — self-hosted variable fonts, system fallbacks */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, monospace;
+
+  /* Type scale (1.2 ratio, 16px base) */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Layout */
+  --spacing-sidebar: 15.5rem;
+  --spacing-topbar: 3.5rem;
+  --container-content: 80rem;
+
+  /* Motion — short and restrained */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+
+  --animate-fade-in: pn-fade-in var(--duration-base) var(--ease-out-quint);
+  --animate-scale-in: pn-scale-in var(--duration-base) var(--ease-out-quint);
+  --animate-slide-in-left: pn-slide-in-left 220ms var(--ease-out-quint);
+  --animate-shimmer: pn-shimmer 1.6s linear infinite;
+
+  @keyframes pn-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes pn-scale-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -48%) scale(0.97);
+    }
+  }
+  @keyframes pn-slide-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes pn-shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

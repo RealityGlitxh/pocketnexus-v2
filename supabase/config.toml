@@ -1,0 +1,60 @@
+# Supabase CLI config for LOCAL development (`supabase start`).
+# This file configures the local Docker stack only. Hosted projects
+# (dev / staging / production) are configured in the Supabase dashboard and
+# linked with `supabase link --project-ref <ref>`. Never link the legacy
+# project cdmzrsvwztndqfwzsumo.
+
+project_id = "pocketnexus-v2"
+
+[api]
+enabled = true
+port = 54321
+# `ingest` is deliberately NOT exposed.
+schemas = ["public", "graphql_public", "catalog"]
+extra_search_path = ["public", "extensions"]
+max_rows = 500
+
+[db]
+port = 54322
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed/seed.sql"]
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+
+[storage]
+enabled = true
+file_size_limit = "5MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173/auth/update-password", "http://localhost:4173/auth/update-password"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+enable_anonymous_sign_ins = false
+minimum_password_length = 10
+password_requirements = "letters_digits"
+
+[auth.rate_limit]
+email_sent = 2
+sign_in_sign_ups = 30
+token_verifications = 30
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "1m0s"
+otp_expiry = 3600

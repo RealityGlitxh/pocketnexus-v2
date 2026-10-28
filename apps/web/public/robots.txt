@@ -1,0 +1,4 @@
+# Staging and preview deployments are replaced with a Disallow-all robots.txt
+# by CI (see .github/workflows/deploy-staging.yml).
+User-agent: *
+Allow: /

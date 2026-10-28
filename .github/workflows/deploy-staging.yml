@@ -1,0 +1,68 @@
+name: Deploy staging
+
+# Deploys ONLY to the new Cloudflare Pages project "pocketnexus-v2".
+# It never touches the legacy beta.pocketnexus.app site, its repository, or
+# its DNS. Runs only after CI passes on main, or manually.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: staging
+      url: ${{ steps.deploy.outputs.deployment-url }}
+    env:
+      VITE_APP_ENV: staging
+      # Repository *variables* (not secrets): these values are public by design.
+      VITE_SUPABASE_URL: ${{ vars.STAGING_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.STAGING_SUPABASE_PUBLISHABLE_KEY }}
+      VITE_SITE_URL: ${{ vars.STAGING_SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: node scripts/write-headers.mjs
+      - name: Block search indexing on staging
+        run: printf 'User-agent: *\nDisallow: /\n' > apps/web/dist/robots.txt
+      - run: pnpm check:secrets
+      - name: Guard — refuse to deploy to the legacy project
+        run: |
+          test "${{ vars.CLOUDFLARE_PAGES_PROJECT || 'pocketnexus-v2' }}" = "pocketnexus-v2" \
+            || { echo "Refusing: unexpected Pages project name"; exit 1; }
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy apps/web/dist --project-name=pocketnexus-v2 --branch=staging --commit-dirty=true
+      - name: Smoke test the deployed URL
+        run: |
+          url="${{ steps.deploy.outputs.deployment-url }}"
+          echo "Deployed to $url"
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$url/")
+          test "$code" = "200" || { echo "Smoke test failed: HTTP $code"; exit 1; }
+          curl -s "$url/" | grep -q '<div id="root">' || { echo "index.html missing root"; exit 1; }

@@ -1,0 +1,7 @@
+# Cloudflare Pages project for PocketNexus 2.0.
+# Deploys are performed by .github/workflows/deploy-staging.yml.
+# This is a NEW Pages project, entirely separate from the legacy
+# beta.pocketnexus.app site (which is served from GitHub Pages).
+name = "pocketnexus-v2"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"

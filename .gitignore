@@ -1,0 +1,22 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.vite/
+*.tsbuildinfo
+.DS_Store
+
+# Environment — never commit real values. Only .env.example is tracked.
+.env
+.env.*
+!.env.example
+apps/web/.env*
+!apps/web/.env.example
+
+# Supabase CLI local state
+supabase/.temp/
+supabase/.branches/
+
+# Cloudflare
+.wrangler/

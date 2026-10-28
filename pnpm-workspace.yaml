@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Only allow install scripts for packages that genuinely need them.
+onlyBuiltDependencies:
+  - esbuild
+  - '@tailwindcss/oxide'
