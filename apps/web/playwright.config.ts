@@ -21,13 +21,16 @@ export default defineConfig({
     { name: 'tablet', use: { ...devices['iPad (gen 7)'], browserName: 'chromium' } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
-  // Tests run against the production build, not the dev server.
-  webServer: process.env.E2E_BASE_URL
-    ? undefined
+  // Tests run against the production build, not the dev server. When
+  // E2E_BASE_URL is set (e.g. a deployed staging URL) no local server starts.
+  ...(process.env.E2E_BASE_URL
+    ? {}
     : {
-        command: 'pnpm build && pnpm preview',
-        port: PORT,
-        reuseExistingServer: !process.env.CI,
-        timeout: 120_000,
-      },
+        webServer: {
+          command: 'pnpm build && pnpm preview',
+          port: PORT,
+          reuseExistingServer: !process.env.CI,
+          timeout: 120_000,
+        },
+      }),
 });

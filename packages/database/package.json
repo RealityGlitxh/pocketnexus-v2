@@ -10,7 +10,7 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "test": "echo \"database: SQL tests run via 'pnpm db:test' (requires PostgreSQL)\"",
-    "gen:types": "supabase gen types typescript --local --schema public,catalog > src/generated/database.types.ts"
+    "gen:types": "supabase gen types typescript --project-id shodljlzwfsuouignvkv --schema public > src/generated/database.types.ts"
   },
   "devDependencies": {
     "typescript": "~5.9.3"

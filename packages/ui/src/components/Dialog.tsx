@@ -8,8 +8,10 @@ export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
 export const DialogClose = DialogPrimitive.Close;
 
-export interface DialogContentProps
-  extends Omit<ComponentPropsWithoutRef<typeof DialogPrimitive.Content>, 'title'> {
+export interface DialogContentProps extends Omit<
+  ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
+  'title'
+> {
   title: ReactNode;
   description?: ReactNode;
   /** Hide the visible title while keeping it for assistive tech. */

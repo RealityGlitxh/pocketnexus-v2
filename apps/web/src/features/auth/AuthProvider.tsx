@@ -30,6 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const clientPromise = getSupabase();
     if (!clientPromise) return;
     const lifecycle = { cancelled: false };
+    const isCancelled = () => lifecycle.cancelled;
     let unsubscribe: (() => void) | undefined;
 
     const apply = (session: SessionLike | null) => {
@@ -46,9 +47,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then(async (client) => {
         // Effect may have been cleaned up while the SDK chunk was loading
         // (StrictMode double-invoke, fast unmount): don't leak a subscription.
-        if (lifecycle.cancelled) return;
+        if (isCancelled()) return;
         const { data } = client.auth.onAuthStateChange((event, session) => {
-          if (lifecycle.cancelled) return;
+          if (isCancelled()) return;
           if (event === 'PASSWORD_RECOVERY') setRecovery(true);
           if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') setRecovery(false);
           apply(session);
@@ -57,11 +58,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           data.subscription.unsubscribe();
         };
         const { data: sessionData } = await client.auth.getSession();
-        if (!lifecycle.cancelled) apply(sessionData.session);
+        if (!isCancelled()) apply(sessionData.session);
       })
       .catch(() => {
         // SDK chunk failed to load or the client threw during init.
-        if (!lifecycle.cancelled) {
+        if (!isCancelled()) {
           stateRef.current = { status: 'error' };
           setState(stateRef.current);
         }

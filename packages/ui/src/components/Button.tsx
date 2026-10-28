@@ -5,7 +5,6 @@ import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { cn } from '../lib/cn';
 import { buttonVariants } from './Button.variants';
 
-
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   /** Render the child element (e.g. a router Link) with button styling. */

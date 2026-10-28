@@ -7,7 +7,7 @@
       t === 'light' ||
       (t === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
     document.documentElement.dataset.theme = light ? 'light' : 'dark';
-  } catch (e) {
+  } catch {
     /* storage unavailable: keep dark default */
   }
 })();

@@ -51,7 +51,7 @@ function NavLinks({
                 >
                   Soon
                 </span>
-                <span className="sr-only">(in development)</span>
+                <span className="sr-only">{' (in development)'}</span>
               </>
             ) : null
           }

@@ -1,8 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 type SupabaseState =
-  | { status: 'missing' }
-  | { status: 'configured'; url: string; publishableKey: string };
+  { status: 'missing' } | { status: 'configured'; url: string; publishableKey: string };
 
 const envState = vi.hoisted(() => {
   const state: { supabase: SupabaseState } = { supabase: { status: 'missing' } };
