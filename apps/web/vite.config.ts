@@ -2,10 +2,44 @@
 import { fileURLToPath, URL } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
+
+/**
+ * Opt-in bundle composition report (ANALYZE=1 pnpm build → dist/bundle-report.json).
+ * Lists every module in every chunk with its size after tree-shaking (before
+ * minification), so initial-JS budget work can target the real contributors.
+ */
+function bundleReport(): Plugin {
+  return {
+    name: 'pn-bundle-report',
+    apply: 'build',
+    generateBundle(_options, bundle) {
+      const chunks = Object.values(bundle).flatMap((c) =>
+        c.type === 'chunk'
+          ? [
+              {
+                file: c.fileName,
+                isEntry: c.isEntry,
+                isDynamicEntry: c.isDynamicEntry,
+                imports: c.imports,
+                modules: Object.entries(c.modules)
+                  .map(([id, m]) => ({ id, bytes: m.renderedLength }))
+                  .sort((x, y) => y.bytes - x.bytes),
+              },
+            ]
+          : [],
+      );
+      this.emitFile({
+        type: 'asset',
+        fileName: 'bundle-report.json',
+        source: JSON.stringify(chunks, null, 2),
+      });
+    },
+  };
+}
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), ...(process.env.ANALYZE ? [bundleReport()] : [])],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

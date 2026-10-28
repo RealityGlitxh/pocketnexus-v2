@@ -1,7 +1,7 @@
 name: Deploy staging
 
-# Deploys ONLY to the new Cloudflare Pages project "pocketnexus-v2" (branch
-# alias "staging"). It never touches the legacy beta.pocketnexus.app site,
+# Deploys ONLY to the dedicated Cloudflare Pages project "pocketnexus-v2-staging"
+# (production branch "main" → https://pocketnexus-v2-staging.pages.dev). It never touches the legacy beta.pocketnexus.app site,
 # its repository, its Supabase project, or DNS.
 #
 # Gating rules (enforced by the `gate` job, which holds no secrets):
@@ -100,19 +100,25 @@ jobs:
       VITE_SUPABASE_URL: ${{ vars.STAGING_SUPABASE_URL }}
       VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.STAGING_SUPABASE_PUBLISHABLE_KEY }}
       VITE_SITE_URL: ${{ vars.STAGING_SITE_URL }}
-      PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'pocketnexus-v2' }}
+      PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'pocketnexus-v2-staging' }}
+      STAGING_URL: https://pocketnexus-v2-staging.pages.dev
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.gate.outputs.sha }}
           persist-credentials: false
       - name: Confirm checkout matches the approved commit
         run: test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
-      - name: Guard — refuse any Pages project other than pocketnexus-v2
+      - name: Guard — refuse any Pages project other than pocketnexus-v2-staging
         run: |
-          test "$PAGES_PROJECT" = "pocketnexus-v2" || { echo "::error::Refusing to deploy to '$PAGES_PROJECT'"; exit 1; }
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+          test "$PAGES_PROJECT" = "pocketnexus-v2-staging" || { echo "::error::Refusing to deploy to '$PAGES_PROJECT'"; exit 1; }
+      - name: Guard — staging must be built against the development Supabase project
+        run: |
+          [ -n "$VITE_SUPABASE_URL" ] && [ -n "$VITE_SUPABASE_PUBLISHABLE_KEY" ] && [ -n "$VITE_SITE_URL" ] \
+            || { echo "::error::Set repository variables STAGING_SUPABASE_URL, STAGING_SUPABASE_PUBLISHABLE_KEY, STAGING_SITE_URL"; exit 1; }
+          case "$VITE_SUPABASE_URL" in *cdmzrsvwztndqfwzsumo*) echo "::error::Legacy production project"; exit 1;; esac
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0 (v6 requires pnpm 11)
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -128,19 +134,21 @@ jobs:
       - run: pnpm check:secrets
       - name: Deploy to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy apps/web/dist --project-name=pocketnexus-v2 --branch=staging --commit-hash=${{ needs.gate.outputs.sha }}
-      - name: Verify the deployed URL serves this commit
+          command: pages deploy apps/web/dist --project-name=pocketnexus-v2-staging --branch=main --commit-hash=${{ needs.gate.outputs.sha }} --commit-dirty=true
+      - name: Verify the deployed URLs serve this commit
         env:
-          URL: ${{ steps.deploy.outputs.deployment-url }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
         run: |
           set -euo pipefail
-          [ -n "$URL" ] || { echo "::error::wrangler returned no deployment URL"; exit 1; }
+          [ -n "$DEPLOYMENT_URL" ] || { echo "::error::wrangler returned no deployment URL"; exit 1; }
+          for URL in "$DEPLOYMENT_URL" "$STAGING_URL"; do
           echo "Verifying $URL"
-          for i in 1 2 3 4 5 6; do
+          served=""
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
             served=$(curl -fsS "$URL/version.json" | sed -n 's/.*"sha":"\([0-9a-f]*\)".*/\1/p') && [ "$served" = "$DEPLOY_SHA" ] && break
             echo "  attempt $i: got '${served:-nothing}', waiting…"; sleep 10
           done
@@ -152,3 +160,24 @@ jobs:
           curl -fsSI "$URL/" | grep -qi '^content-security-policy:' || { echo "::error::CSP header missing"; exit 1; }
           curl -fsS "$URL/robots.txt" | grep -q 'Disallow: /' || { echo "::error::staging robots.txt not applied"; exit 1; }
           echo "Verified: $URL serves $DEPLOY_SHA"
+          done
+      - name: Install Playwright browser
+        run: pnpm --filter @pocketnexus/web exec playwright install --with-deps chromium
+      - name: Playwright against the live staging site (shell + authenticated suite)
+        env:
+          CI: 'true'
+          E2E_BASE_URL: ${{ env.STAGING_URL }}
+          E2E_SUPABASE_URL: ${{ vars.STAGING_SUPABASE_URL }}
+          E2E_SUPABASE_PUBLISHABLE_KEY: ${{ vars.STAGING_SUPABASE_PUBLISHABLE_KEY }}
+          # Dedicated, pre-confirmed TEST accounts in the dev project (never real users).
+          E2E_USER_A_EMAIL: ${{ secrets.E2E_USER_A_EMAIL }}
+          E2E_USER_A_PASSWORD: ${{ secrets.E2E_USER_A_PASSWORD }}
+          E2E_USER_B_EMAIL: ${{ secrets.E2E_USER_B_EMAIL }}
+          E2E_USER_B_PASSWORD: ${{ secrets.E2E_USER_B_PASSWORD }}
+        run: pnpm test:e2e
+      - if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: staging-playwright-report
+          path: apps/web/playwright-report
+          retention-days: 7

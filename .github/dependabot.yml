@@ -16,3 +16,7 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    ignore:
+      # v6+ requires pnpm 11; the project is pinned to pnpm 10.28.0.
+      - dependency-name: pnpm/action-setup
+        versions: ['>=6']
