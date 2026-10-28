@@ -9,23 +9,23 @@ sandbox cannot reach the npm registry, so the lockfile was generated on a runner
 `bootstrap/lockfile` workflow and committed. Main-branch CI then verifies the committed lockfile
 with `--frozen-lockfile`.
 
-| Check | Result |
-| --- | --- |
-| `pnpm install` / `pnpm install --frozen-lockfile` | ✅ Pass |
-| Prettier (`format:check`) | ✅ Pass |
-| ESLint (type-aware, `--max-warnings=0`) | ✅ Pass |
-| TypeScript (all 4 packages, strict) | ✅ Pass |
-| Vitest: shared 15, ui 10, web 73 | ✅ 98/98 pass |
-| Contrast (both themes) | ✅ Pass |
-| `vite build` | ✅ Pass |
-| Bundle budgets | ✅ Pass (initial JS 183.4 kB gz, budget re-baselined to 190 kB) |
-| Secret scan (source + build) | ✅ Pass |
-| `pnpm audit --prod --audit-level high` | ✅ Pass |
-| Playwright + axe (desktop, tablet, mobile) | ✅ 46 passed, 2 intentionally skipped |
-| Migrations + RLS on PostgreSQL 17 (CI) | ✅ Pass |
-| Migrations + RLS on the hosted dev Supabase project | ✅ Pass (rolled back) |
-| Auth flows against the dev project | ❌ Not tested: no deployed app yet |
-| Cloudflare staging deploy | ❌ Not set up |
+| Check                                               | Result                                                          |
+| --------------------------------------------------- | --------------------------------------------------------------- |
+| `pnpm install` / `pnpm install --frozen-lockfile`   | ✅ Pass                                                         |
+| Prettier (`format:check`)                           | ✅ Pass                                                         |
+| ESLint (type-aware, `--max-warnings=0`)             | ✅ Pass                                                         |
+| TypeScript (all 4 packages, strict)                 | ✅ Pass                                                         |
+| Vitest: shared 15, ui 10, web 73                    | ✅ 98/98 pass                                                   |
+| Contrast (both themes)                              | ✅ Pass                                                         |
+| `vite build`                                        | ✅ Pass                                                         |
+| Bundle budgets                                      | ✅ Pass (initial JS 183.4 kB gz, budget re-baselined to 190 kB) |
+| Secret scan (source + build)                        | ✅ Pass                                                         |
+| `pnpm audit --prod --audit-level high`              | ✅ Pass                                                         |
+| Playwright + axe (desktop, tablet, mobile)          | ✅ 46 passed, 2 intentionally skipped                           |
+| Migrations + RLS on PostgreSQL 17 (CI)              | ✅ Pass                                                         |
+| Migrations + RLS on the hosted dev Supabase project | ✅ Pass (rolled back)                                           |
+| Auth flows against the dev project                  | ❌ Not tested: no deployed app yet                              |
+| Cloudflare staging deploy                           | ❌ Not set up                                                   |
 
 Defects found and fixed by these runs: `TabsTrigger` dropped caller classes; the mobile drawer did
 not return focus to the menu button on Escape; hand-written database types made supabase-js type
@@ -34,6 +34,7 @@ made the dashboard load the SDK eagerly; a placeholder link's accessible name la
 secret scan's OpenAI pattern matched CSS identifiers.
 
 ### Remaining before Phase 1
+
 1. Cloudflare Pages staging project + secrets; confirm the deploy workflow's URL verification.
 2. Supabase dev auth settings (site URL, redirect URLs, password policy) and an end-to-end
    sign-up → profile → sign-in → reset → sign-out check against staging.
