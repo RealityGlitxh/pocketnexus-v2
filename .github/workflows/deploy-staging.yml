@@ -53,11 +53,28 @@ jobs:
           RUN_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
           RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           DISPATCH_SHA: ${{ github.sha }}
-          # Only whether the secret exists — its value never enters this job.
+          # Only whether each secret/variable exists — no value enters this job.
           CF_CONFIGURED: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+          VARS_CONFIGURED: ${{ vars.STAGING_SUPABASE_URL != '' && vars.STAGING_SUPABASE_PUBLISHABLE_KEY != '' && vars.STAGING_SITE_URL != '' }}
+          E2E_CONFIGURED: ${{ secrets.E2E_USER_A_EMAIL != '' && secrets.E2E_USER_A_PASSWORD != '' && secrets.E2E_USER_B_EMAIL != '' && secrets.E2E_USER_B_PASSWORD != '' }}
         run: |
           set -euo pipefail
-          skip() { echo "::notice::Not deploying: $1"; echo "deploy=false" >> "$GITHUB_OUTPUT"; exit 0; }
+          yn() { [ "$1" = "true" ] && echo "✅ set" || echo "⏳ missing"; }
+          {
+            echo "### Staging configuration (names only, no values)"
+            echo "| Item | Status |"
+            echo "| --- | --- |"
+            echo "| Secrets \`CLOUDFLARE_API_TOKEN\`, \`CLOUDFLARE_ACCOUNT_ID\` | $(yn "$CF_CONFIGURED") |"
+            echo "| Variables \`STAGING_SUPABASE_URL\`, \`STAGING_SUPABASE_PUBLISHABLE_KEY\`, \`STAGING_SITE_URL\` | $(yn "$VARS_CONFIGURED") |"
+            echo "| Secrets \`E2E_USER_A/B_EMAIL\`, \`E2E_USER_A/B_PASSWORD\` (authenticated suite) | $(yn "$E2E_CONFIGURED") |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::notice title=Staging configuration::cloudflare_secrets=$CF_CONFIGURED staging_variables=$VARS_CONFIGURED e2e_test_accounts=$E2E_CONFIGURED"
+
+          skip() {
+            echo "::notice::Not deploying: $1"
+            printf '\n**Not deploying:** %s\n' "$1" >> "$GITHUB_STEP_SUMMARY"
+            echo "deploy=false" >> "$GITHUB_OUTPUT"; exit 0
+          }
 
           [ "$CF_CONFIGURED" = "true" ] || skip "Cloudflare secrets are not configured yet (see docs/DEPLOYMENT.md)"
 
@@ -132,6 +149,39 @@ jobs:
         run: |
           printf 'User-agent: *\nDisallow: /\n' > apps/web/dist/robots.txt
       - run: pnpm check:secrets
+      - name: Ensure the Pages project exists (create once; never modify an existing project)
+        id: project
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          api="https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects"
+          out="$RUNNER_TEMP/pages-project.json"
+          cf() { curl -sS -o "$out" -w '%{http_code}' -H "Authorization: Bearer ${CF_API_TOKEN}" "$@"; }
+          errors() { jq -r '.errors[]? | "  Cloudflare error \(.code): \(.message)"' "$out" || true; }
+
+          code=$(cf "$api/$PAGES_PROJECT")
+          if [ "$code" = "404" ]; then
+            echo "Project $PAGES_PROJECT does not exist yet; creating it (Direct Upload, production branch main)."
+            code=$(cf -X POST -H 'Content-Type: application/json' \
+              --data "{\"name\":\"$PAGES_PROJECT\",\"production_branch\":\"main\"}" "$api")
+            [ "$code" = "200" ] || { echo "::error::Creating the Pages project failed (HTTP $code)"; errors; exit 1; }
+            echo "action=created" >> "$GITHUB_OUTPUT"
+          elif [ "$code" = "200" ]; then
+            echo "action=exists" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Reading the Pages project failed (HTTP $code). Check the token has Account › Cloudflare Pages › Edit."
+            errors; exit 1
+          fi
+
+          subdomain=$(jq -r '.result.subdomain' "$out")
+          branch=$(jq -r '.result.production_branch' "$out")
+          source_type=$(jq -r '.result.source.type // "direct_upload"' "$out")
+          echo "Project: $PAGES_PROJECT  subdomain=$subdomain  production_branch=$branch  source=$source_type"
+          [ "https://$subdomain" = "$STAGING_URL" ] || { echo "::error::Project serves https://$subdomain, expected $STAGING_URL (name taken?)"; exit 1; }
+          [ "$branch" = "main" ] || { echo "::error::Production branch is '$branch'; set it to 'main' in the Cloudflare dashboard"; exit 1; }
+          [ "$source_type" = "direct_upload" ] || echo "::warning::Project is connected to $source_type; deploys should come only from this workflow"
       - name: Deploy to Cloudflare Pages
         id: deploy
         uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
@@ -140,6 +190,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy apps/web/dist --project-name=pocketnexus-v2-staging --branch=main --commit-hash=${{ needs.gate.outputs.sha }} --commit-dirty=true
       - name: Verify the deployed URLs serve this commit
+        id: verify
         env:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
         run: |
@@ -161,9 +212,25 @@ jobs:
           curl -fsS "$URL/robots.txt" | grep -q 'Disallow: /' || { echo "::error::staging robots.txt not applied"; exit 1; }
           echo "Verified: $URL serves $DEPLOY_SHA"
           done
+      - name: Check dev Supabase auth settings (public endpoint, advisory)
+        id: auth_settings
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          s=$(curl -fsS -H "apikey: $VITE_SUPABASE_PUBLISHABLE_KEY" "$VITE_SUPABASE_URL/auth/v1/settings")
+          email=$(jq -r '.external.email' <<<"$s")
+          autoconfirm=$(jq -r '.mailer_autoconfirm' <<<"$s")
+          signup_disabled=$(jq -r '.disable_signup' <<<"$s")
+          echo "email_provider=$email mailer_autoconfirm=$autoconfirm disable_signup=$signup_disabled"
+          echo "summary=email provider: $email · confirm email: $([ "$autoconfirm" = false ] && echo on || echo OFF) · sign-ups disabled: $signup_disabled" >> "$GITHUB_OUTPUT"
+          ok=true
+          [ "$email" = "true" ] || { echo "::warning::Email provider is disabled on the dev project"; ok=false; }
+          [ "$autoconfirm" = "false" ] || { echo "::warning::'Confirm email' is OFF on the dev project (see docs/DEPLOYMENT.md §2)"; ok=false; }
+          [ "$ok" = true ]
       - name: Install Playwright browser
         run: pnpm --filter @pocketnexus/web exec playwright install --with-deps chromium
       - name: Playwright against the live staging site (shell + authenticated suite)
+        id: e2e
         env:
           CI: 'true'
           E2E_BASE_URL: ${{ env.STAGING_URL }}
@@ -181,3 +248,29 @@ jobs:
           name: staging-playwright-report
           path: apps/web/playwright-report
           retention-days: 7
+      - name: Record deployment results
+        if: always()
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+          PROJECT_ACTION: ${{ steps.project.outputs.action }}
+          R_PROJECT: ${{ steps.project.outcome }}
+          R_DEPLOY: ${{ steps.deploy.outcome }}
+          R_VERIFY: ${{ steps.verify.outcome }}
+          R_AUTH: ${{ steps.auth_settings.outcome }}
+          AUTH_SUMMARY: ${{ steps.auth_settings.outputs.summary }}
+          R_E2E: ${{ steps.e2e.outcome }}
+          E2E_ACCOUNTS: ${{ secrets.E2E_USER_A_EMAIL != '' && secrets.E2E_USER_B_EMAIL != '' }}
+        run: |
+          icon() { case "$1" in success) echo "✅ success";; failure) echo "❌ failure";; skipped|'') echo "⏭️ not run";; *) echo "$1";; esac; }
+          {
+            echo "### Staging deployment"
+            echo "| Check | Result |"
+            echo "| --- | --- |"
+            echo "| Commit | \`$DEPLOY_SHA\` |"
+            echo "| Pages project \`$PAGES_PROJECT\` | $(icon "$R_PROJECT") ${PROJECT_ACTION:+($PROJECT_ACTION)} |"
+            echo "| Upload (wrangler) | $(icon "$R_DEPLOY") ${DEPLOYMENT_URL:+— $DEPLOYMENT_URL} |"
+            echo "| Live URLs serve this commit, SPA fallback, CSP, robots | $(icon "$R_VERIFY") |"
+            auth_icon=$(icon "$R_AUTH"); [ "$R_AUTH" = failure ] && auth_icon="⚠️ needs attention"
+            echo "| Dev auth settings (advisory) | $auth_icon ${AUTH_SUMMARY:+— $AUTH_SUMMARY} |"
+            echo "| Playwright on $STAGING_URL | $(icon "$R_E2E") $([ "$E2E_ACCOUNTS" = true ] && echo '(incl. authenticated + RLS suite)' || echo '(authenticated suite skipped: no test-account secrets)') |"
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -12,6 +12,12 @@ updates:
       runtime-minor:
         dependency-type: production
         update-types: [minor, patch]
+    ignore:
+      # Major upgrades (e.g. TypeScript 7, jsdom 30, @vitejs/plugin-react 6,
+      # @testing-library/jest-dom 7) change behaviour or APIs and are done in
+      # deliberate, reviewed PRs rather than automatic bumps.
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: /
     schedule:

@@ -1,0 +1,123 @@
+name: Supabase dev auth config
+
+# Optional, manually triggered. Applies the approved auth URL / password policy to the
+# DEVELOPMENT project `pocketnexus-v2-dev` (shodljlzwfsuouignvkv) through the Supabase
+# Management API. It never targets any other project and refuses the legacy one.
+#
+# Requires the secret SUPABASE_ACCESS_TOKEN in the `supabase-dev-admin` environment
+# (a personal access token from https://supabase.com/dashboard/account/tokens).
+# Doing the same four settings by hand in the dashboard (docs/DEPLOYMENT.md §2) is
+# equally fine; this workflow exists so the configuration is reviewable and repeatable.
+#
+# Safety:
+#  - mode=plan (default) only reads and reports; mode=apply changes settings.
+#  - Only the fields below are read or written. The full auth config (which contains
+#    SMTP and hook secrets) is never printed.
+#  - Redirect URLs are merged: existing entries are kept, never removed.
+#  - The run fails before writing if any expected field is missing from the API response.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'plan = show differences only; apply = write the settings'
+        type: choice
+        options: [plan, apply]
+        default: plan
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-dev-auth-config
+  cancel-in-progress: false
+
+jobs:
+  auth-config:
+    name: ${{ inputs.mode }} auth settings on pocketnexus-v2-dev
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: supabase-dev-admin
+    env:
+      PROJECT_REF: shodljlzwfsuouignvkv
+      SITE_URL: https://pocketnexus-v2-staging.pages.dev
+      REDIRECT_URLS: >-
+        https://pocketnexus-v2-staging.pages.dev/auth/update-password,https://pocketnexus-v2-staging.pages.dev/,http://localhost:5173/auth/update-password,http://localhost:5173/
+      PASSWORD_MIN_LENGTH: '10'
+      # "Letters and digits" in the dashboard.
+      PASSWORD_REQUIRED_CHARACTERS: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:0123456789'
+    steps:
+      - name: Guard — development project only
+        env:
+          HAS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN != '' }}
+        run: |
+          [ "$PROJECT_REF" = "shodljlzwfsuouignvkv" ] || { echo "::error::Unexpected project ref"; exit 1; }
+          case "$PROJECT_REF" in *cdmzrsvwztndqfwzsumo*) echo "::error::Legacy production project"; exit 1;; esac
+          [ "$HAS_TOKEN" = "true" ] || { echo "::error::Add the SUPABASE_ACCESS_TOKEN secret to the supabase-dev-admin environment"; exit 1; }
+
+      - name: Read current settings and compute the change
+        id: plan
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          api="https://api.supabase.com/v1/projects/$PROJECT_REF/config/auth"
+          full="$RUNNER_TEMP/auth-full.json"
+          code=$(curl -sS -o "$full" -w '%{http_code}' -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" "$api")
+          [ "$code" = "200" ] || { echo "::error::Reading auth config failed (HTTP $code)"; exit 1; }
+
+          # Keep only the fields this workflow manages; delete the full response immediately.
+          jq '{site_url, uri_allow_list, password_min_length, password_required_characters,
+               mailer_autoconfirm, external_email_enabled}' "$full" > "$RUNNER_TEMP/current.json"
+          missing=$(jq -r '[ "site_url","uri_allow_list","password_min_length","password_required_characters","mailer_autoconfirm","external_email_enabled"]
+                           - (keys) | join(",")' "$full")
+          rm -f "$full"
+          [ -z "$missing" ] || { echo "::error::Auth config response lacks: $missing (API changed?) — not writing anything"; exit 1; }
+
+          jq --arg site "$SITE_URL" --arg urls "$REDIRECT_URLS" \
+             --argjson minlen "$PASSWORD_MIN_LENGTH" --arg chars "$PASSWORD_REQUIRED_CHARACTERS" '
+            {
+              site_url: $site,
+              uri_allow_list: ((((.uri_allow_list // "") | split(",") | map(select(length > 0)))
+                                 + ($urls | split(","))) | unique | join(",")),
+              password_min_length: $minlen,
+              password_required_characters: $chars,
+              mailer_autoconfirm: false,
+              external_email_enabled: true
+            }' "$RUNNER_TEMP/current.json" > "$RUNNER_TEMP/desired.json"
+
+          echo "Current:"; jq . "$RUNNER_TEMP/current.json"
+          echo "Desired:"; jq . "$RUNNER_TEMP/desired.json"
+          if jq -e --slurpfile d "$RUNNER_TEMP/desired.json" '. == $d[0]' "$RUNNER_TEMP/current.json" >/dev/null; then
+            changed=false; state="up to date"
+          else
+            changed=true; state="changes pending"
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "State: $state"
+          {
+            echo "### pocketnexus-v2-dev auth settings ($state)"
+            echo '```json'; jq -n --slurpfile c "$RUNNER_TEMP/current.json" --slurpfile d "$RUNNER_TEMP/desired.json" '{current: $c[0], desired: $d[0]}'; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Apply and verify
+        if: inputs.mode == 'apply' && steps.plan.outputs.changed == 'true'
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          api="https://api.supabase.com/v1/projects/$PROJECT_REF/config/auth"
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X PATCH \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" -H 'Content-Type: application/json' \
+            --data @"$RUNNER_TEMP/desired.json" "$api")
+          [ "$code" = "200" ] || { echo "::error::Updating auth config failed (HTTP $code)"; exit 1; }
+
+          full="$RUNNER_TEMP/auth-full.json"
+          curl -fsS -o "$full" -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" "$api"
+          jq '{site_url, uri_allow_list, password_min_length, password_required_characters,
+               mailer_autoconfirm, external_email_enabled}' "$full" > "$RUNNER_TEMP/after.json"
+          rm -f "$full"
+          jq -e --slurpfile d "$RUNNER_TEMP/desired.json" '. == $d[0]' "$RUNNER_TEMP/after.json" >/dev/null \
+            || { echo "::error::Settings read back differ from what was written"; jq . "$RUNNER_TEMP/after.json"; exit 1; }
+          echo "Applied and verified."
+          printf '\n✅ Applied and verified by reading the settings back.\n' >> "$GITHUB_STEP_SUMMARY"
