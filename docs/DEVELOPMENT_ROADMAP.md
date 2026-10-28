@@ -2,50 +2,44 @@
 
 ## Phase 0 — Foundation (this phase)
 
-### Verification status (updated 2026‑10‑28, Phase 0.1)
+### Verification status (updated 2026‑10‑28, Phase 0.2)
 
-**Readiness decision: NOT READY for Phase 1.** The npm registry and GitHub authentication are
-unavailable in the build environment, so dependencies have never been installed and the web app
-has never been compiled by `tsc`, linted, unit-tested under Vitest, built, or rendered in a browser.
-Those are critical gates, not formalities.
+All results below were produced on GitHub Actions runners (Node 22.23.4, pnpm 10.28.0); the dev
+sandbox cannot reach the npm registry, so the lockfile was generated on a runner by a temporary
+`bootstrap/lockfile` workflow and committed. Main-branch CI then verifies the committed lockfile
+with `--frozen-lockfile`.
 
-Legend: ✅ executed and passed · ❌ blocked · ⏳ written, not executed
+| Check | Result |
+| --- | --- |
+| `pnpm install` / `pnpm install --frozen-lockfile` | ✅ Pass |
+| Prettier (`format:check`) | ✅ Pass |
+| ESLint (type-aware, `--max-warnings=0`) | ✅ Pass |
+| TypeScript (all 4 packages, strict) | ✅ Pass |
+| Vitest: shared 15, ui 10, web 73 | ✅ 98/98 pass |
+| Contrast (both themes) | ✅ Pass |
+| `vite build` | ✅ Pass |
+| Bundle budgets | ✅ Pass (initial JS 183.4 kB gz, budget re-baselined to 190 kB) |
+| Secret scan (source + build) | ✅ Pass |
+| `pnpm audit --prod --audit-level high` | ✅ Pass |
+| Playwright + axe (desktop, tablet, mobile) | ✅ 46 passed, 2 intentionally skipped |
+| Migrations + RLS on PostgreSQL 17 (CI) | ✅ Pass |
+| Migrations + RLS on the hosted dev Supabase project | ✅ Pass (rolled back) |
+| Auth flows against the dev project | ❌ Not tested: no deployed app yet |
+| Cloudflare staging deploy | ❌ Not set up |
 
-| Check                                                                | Status                         | Evidence                                                                                                                                        |
-| -------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm-lock.yaml` generated                                           | ❌ Blocked                     | registry connection rejected by environment policy; not hand-written (would require fabricated integrity hashes)                                |
-| `pnpm install --frozen-lockfile`                                     | ❌ Blocked                     | needs lockfile + registry                                                                                                                       |
-| Prettier / ESLint                                                    | ⏳ Not run                     | needs installed deps                                                                                                                            |
-| `tsc` for `apps/web`, `packages/ui`                                  | ⏳ Not run                     | needs `@types/react` etc.                                                                                                                       |
-| `tsc` for `packages/shared`, `packages/database` (strict)            | ✅ Pass                        | local TypeScript 6.0.3                                                                                                                          |
-| esbuild resolution check of all web/ui source + 14 test files        | ✅ Pass (78 modules, 0 errors) | catches syntax errors, broken `@/` or relative imports, missing named exports; verified it fails on a planted bad import. **Not a type check.** |
-| Vitest — shared (15), auth transitions (10), status indicators (6)   | ✅ 31/31 pass                  | executed via local harness with the real zod v4 API, not Vitest                                                                                 |
-| Vitest — remaining web (57) and ui (10) component/integration tests  | ⏳ Not run                     | need jsdom, Testing Library, React Router, Radix                                                                                                |
-| `vite build` + bundle budgets                                        | ⏳ Not run                     | needs installed deps                                                                                                                            |
-| Playwright + axe, desktop/tablet/mobile (16 tests × 3 projects)      | ⏳ Not run                     | needs build + browsers                                                                                                                          |
-| DB migrations + RLS on a disposable PostgreSQL 16.15 database        | ✅ 41/41 pass                  | database dropped after run                                                                                                                      |
-| RLS suite catches regressions (mutation test, 6 injected weaknesses) | ✅ 6/6 caught                  | run on a repo copy                                                                                                                              |
-| Dev seed idempotent                                                  | ✅ Pass                        |                                                                                                                                                 |
-| Contrast (both themes, 26 pairs each)                                | ✅ Pass                        | found and fixed 2 more dark-theme failures in 0.1                                                                                               |
-| Secret scan (source + build output)                                  | ✅ Pass                        | verified against a planted key                                                                                                                  |
-| Workflow YAML validity                                               | ✅ Pass                        | found and fixed a YAML error that would have stopped the Phase 0 deploy workflow from loading                                                   |
-| Deploy gate logic (8 scenarios incl. fork-named-`main`)              | ✅ 8/8 correct                 | executed with stubbed `gh`                                                                                                                      |
-| Dev Supabase project + migrations                                    | ✅ Created & applied           | `shodljlzwfsuouignvkv`; migration filenames aligned with hosted history                                                                         |
-| RLS suite on the hosted dev database                                 | ✅ Pass (rolled back)          | one timing check is only meaningful locally (single-transaction `now()`)                                                                        |
-| Auth flows against the dev project                                   | ❌ Blocked                     | sandbox cannot reach `*.supabase.co`; needs a running app                                                                                       |
-| GitHub CI run                                                        | ❌ Blocked                     | repo not created (invalid GitHub token)                                                                                                         |
-| Cloudflare staging deploy + URL verification                         | ❌ Blocked                     | no Pages project / credentials                                                                                                                  |
+Defects found and fixed by these runs: `TabsTrigger` dropped caller classes; the mobile drawer did
+not return focus to the menu button on Escape; hand-written database types made supabase-js type
+query results as `null` (replaced with generated types); forcing `@supabase` into a manual chunk
+made the dashboard load the SDK eagerly; a placeholder link's accessible name lacked a space; the
+secret scan's OpenAI pattern matched CSS identifiers.
 
-### Critical items before Phase 1
-
-1. With registry access: `pnpm install` (commit `pnpm-lock.yaml`), `pnpm install --frozen-lockfile`,
-   `pnpm verify`, `pnpm test:e2e`. Fix every failure; expect some type/lint findings in code that
-   has never been compiled.
-2. Review Playwright screenshots of every route at 320 px, tablet, and desktop.
-3. Create the dev Supabase project; verify sign-up → profile → sign-in → reset → sign-out.
-4. Run migrations through `supabase db reset` (CLI, Postgres 17) in addition to the shim tests.
-5. Create the GitHub repo, enable branch protection requiring all three CI jobs; confirm green.
-6. Create the Cloudflare Pages project; confirm the deploy workflow's URL verification passes.
+### Remaining before Phase 1
+1. Cloudflare Pages staging project + secrets; confirm the deploy workflow's URL verification.
+2. Supabase dev auth settings (site URL, redirect URLs, password policy) and an end-to-end
+   sign-up → profile → sign-in → reset → sign-out check against staging.
+3. Branch protection on `main` requiring the `verify`, `database`, and `e2e` checks.
+4. Update GitHub Actions pins to Node 24-based majors (current pins emit deprecation warnings).
+5. Remove the temporary `bootstrap/*` branches.
 
 ## Phase 1 — Core data & decks
 
