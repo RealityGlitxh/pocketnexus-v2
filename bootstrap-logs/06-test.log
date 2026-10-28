@@ -1,0 +1,57 @@
+
+> pocketnexus-v2@0.0.0 test /home/runner/work/pocketnexus-v2/pocketnexus-v2
+> pnpm -r --parallel --no-bail test
+
+Scope: 4 of 5 workspace projects
+apps/web test$ vitest run
+packages/database test$ echo "database: SQL tests run via 'pnpm db:test' (requires PostgreSQL)"
+packages/shared test$ vitest run
+packages/ui test$ vitest run
+packages/database test: database: SQL tests run via 'pnpm db:test' (requires PostgreSQL)
+packages/database test: Done
+packages/shared test: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90m/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/shared[39m
+packages/ui test: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90m/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui[39m
+apps/web test: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90m/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web[39m
+packages/shared test:  [32m✓[39m src/config/env.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+packages/shared test:  [32m✓[39m src/schemas/schemas.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+packages/shared test: [2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+packages/shared test: [2m      Tests [22m [1m[32m15 passed[39m[22m[90m (15)[39m
+packages/shared test: [2m   Start at [22m 13:58:28
+packages/shared test: [2m   Duration [22m 1.10s[2m (transform 265ms, setup 0ms, collect 471ms, tests 31ms, environment 1ms, prepare 534ms)[22m
+packages/shared test: Done
+apps/web test:  [32m✓[39m src/features/auth/AuthProvider.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 115[2mms[22m[39m
+packages/ui test:  [32m✓[39m src/components/components.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[33m 1037[2mms[22m[39m
+packages/ui test: [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+packages/ui test: [2m      Tests [22m [1m[32m10 passed[39m[22m[90m (10)[39m
+packages/ui test: [2m   Start at [22m 13:58:28
+packages/ui test: [2m   Duration [22m 4.36s[2m (transform 350ms, setup 325ms, collect 752ms, tests 1.04s, environment 1.46s, prepare 405ms)[22m
+apps/web test: [90mstderr[2m | src/routes/accessibility.test.tsx[2m > [22m[2mnavigation accessibility[2m > [22m[2msets titles on auth pages too
+apps/web test: [22m[39mNo `HydrateFallback` element provided to render during initial hydration
+packages/ui test: Done
+apps/web test:  [32m✓[39m src/services/health.service.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+apps/web test:  [32m✓[39m src/routes/accessibility.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 2153[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m navigation accessibility[2m > [22msets a per-page document title [33m 747[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m navigation accessibility[2m > [22mmoves focus to main content after sidebar navigation [33m 382[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m navigation accessibility[2m > [22mmoves focus to main content after navigating from the mobile drawer [33m 445[2mms[22m[39m
+apps/web test: [90mstderr[2m | src/routes/routes.test.tsx[2m > [22m[2mapplication shell[2m > [22m[2mauth forms are visibly disabled when no backend is configured
+apps/web test: [22m[39mNo `HydrateFallback` element provided to render during initial hydration
+apps/web test:  [32m✓[39m src/routes/routes.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 2881[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m application shell[2m > [22mrenders the dashboard with the unofficial disclaimer [33m 603[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m application shell[2m > [22mnavigates via the sidebar and marks the active link [33m 438[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m application shell[2m > [22mopens and closes the mobile navigation drawer [33m 391[2mms[22m[39m
+apps/web test: [90mstderr[2m | src/routes/configHandling.test.tsx[2m > [22m[2mmissing Supabase configuration[2m > [22m[2mauth forms explain why they are disabled
+apps/web test: [22m[39mNo `HydrateFallback` element provided to render during initial hydration
+apps/web test:  [32m✓[39m src/routes/configHandling.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 1220[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m missing Supabase configuration[2m > [22mdashboard reports it without claiming connectivity [33m 566[2mms[22m[39m
+apps/web test:  [32m✓[39m src/features/dashboard/statusIndicators.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+apps/web test:  [32m✓[39m src/components/ErrorBoundaries.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 417[2mms[22m[39m
+apps/web test:    [33m[2m✓[22m[39m RouteErrorBoundary[2m > [22mcontains a page crash inside the shell and offers a way back [33m 339[2mms[22m[39m
+apps/web test:  [32m✓[39m src/features/auth/authTransitions.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+apps/web test:  [32m✓[39m src/services/auth.service.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+apps/web test:  [32m✓[39m src/features/auth/RequireAuth.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 309[2mms[22m[39m
+apps/web test:  [32m✓[39m src/features/auth/safeReturnPath.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+apps/web test: [2m Test Files [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+apps/web test: [2m      Tests [22m [1m[32m73 passed[39m[22m[90m (73)[39m
+apps/web test: [2m   Start at [22m 13:58:28
+apps/web test: [2m   Duration [22m 10.17s[2m (transform 941ms, setup 2.58s, collect 4.50s, tests 7.14s, environment 9.59s, prepare 2.12s)[22m
+apps/web test: Done

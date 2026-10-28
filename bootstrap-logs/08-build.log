@@ -1,0 +1,64 @@
+
+> pocketnexus-v2@0.0.0 build /home/runner/work/pocketnexus-v2/pocketnexus-v2
+> pnpm --filter @pocketnexus/web build
+
+
+> @pocketnexus/web@0.0.0 build /home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web
+> vite build
+
+[36mvite v7.3.7 [32mbuilding client environment for production...[36m[39m
+transforming...
+[33m../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.[39m
+[33m../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.[39m
+[32m✓[39m 2009 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                                                  [39m[1m[2m  0.92 kB[22m[1m[22m[2m │ gzip:   0.49 kB[22m
+[2mdist/[22m[2massets/[22m[32mspace-grotesk-vietnamese-wght-normal-D0rl6rjA.woff2  [39m[1m[2m  6.71 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-vietnamese-wght-normal-CBcvBZtf.woff2          [39m[1m[2m 10.25 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-greek-ext-wght-normal-DlzME5K_.woff2           [39m[1m[2m 11.23 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-cyrillic-wght-normal-DqGufNeO.woff2            [39m[1m[2m 18.75 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32mspace-grotesk-latin-ext-wght-normal-D9tNdqV9.woff2   [39m[1m[2m 18.94 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-greek-wght-normal-CkhJZR-_.woff2               [39m[1m[2m 19.00 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32mspace-grotesk-latin-wght-normal-BhU9QXUp.woff2       [39m[1m[2m 22.29 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-cyrillic-ext-wght-normal-BOeWTOD4.woff2        [39m[1m[2m 25.96 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-latin-wght-normal-Dx4kXJAl.woff2               [39m[1m[2m 48.26 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[32minter-latin-ext-wght-normal-DO1Apj_S.woff2           [39m[1m[2m 85.07 kB[22m[1m[22m
+[2mdist/[22m[2massets/[22m[35mindex-DIieJl0s.css                                   [39m[1m[2m 37.38 kB[22m[1m[22m[2m │ gzip:   8.10 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DsY7Crpi.js                                    [39m[1m[2m  0.58 kB[22m[1m[22m[2m │ gzip:   0.40 kB[22m[2m │ map:     0.89 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-CS37mlXg.js                                    [39m[1m[2m  0.61 kB[22m[1m[22m[2m │ gzip:   0.42 kB[22m[2m │ map:     0.92 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DLvGr35t.js                                    [39m[1m[2m  0.65 kB[22m[1m[22m[2m │ gzip:   0.44 kB[22m[2m │ map:     0.96 kB[22m
+[2mdist/[22m[2massets/[22m[36mNotFoundPage-B146rlpp.js                             [39m[1m[2m  0.65 kB[22m[1m[22m[2m │ gzip:   0.47 kB[22m[2m │ map:     1.96 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-BlpEe0LX.js                                    [39m[1m[2m  0.67 kB[22m[1m[22m[2m │ gzip:   0.46 kB[22m[2m │ map:     0.98 kB[22m
+[2mdist/[22m[2massets/[22m[36mPageHeader-5bXF6Jes.js                               [39m[1m[2m  0.73 kB[22m[1m[22m[2m │ gzip:   0.41 kB[22m[2m │ map:     1.59 kB[22m
+[2mdist/[22m[2massets/[22m[36museDocumentTitle-DktZpsmc.js                         [39m[1m[2m  0.87 kB[22m[1m[22m[2m │ gzip:   0.46 kB[22m[2m │ map:     3.09 kB[22m
+[2mdist/[22m[2massets/[22m[36mAuthFormShell-DEi0EzMY.js                            [39m[1m[2m  1.33 kB[22m[1m[22m[2m │ gzip:   0.71 kB[22m[2m │ map:     3.19 kB[22m
+[2mdist/[22m[2massets/[22m[36mForgotPasswordPage-11J1Mphf.js                       [39m[1m[2m  1.36 kB[22m[1m[22m[2m │ gzip:   0.79 kB[22m[2m │ map:     3.79 kB[22m
+[2mdist/[22m[2massets/[22m[36mPlaceholderPage-DSrXTeEy.js                          [39m[1m[2m  1.50 kB[22m[1m[22m[2m │ gzip:   0.80 kB[22m[2m │ map:     4.47 kB[22m
+[2mdist/[22m[2massets/[22m[36mSignInPage-CBbRXvmA.js                               [39m[1m[2m  1.70 kB[22m[1m[22m[2m │ gzip:   0.92 kB[22m[2m │ map:     5.30 kB[22m
+[2mdist/[22m[2massets/[22m[36mUpdatePasswordPage-BtEnwbyf.js                       [39m[1m[2m  1.95 kB[22m[1m[22m[2m │ gzip:   0.98 kB[22m[2m │ map:     5.26 kB[22m
+[2mdist/[22m[2massets/[22m[36museFormFields-Cyt3BoB5.js                            [39m[1m[2m  2.50 kB[22m[1m[22m[2m │ gzip:   1.27 kB[22m[2m │ map:     9.23 kB[22m
+[2mdist/[22m[2massets/[22m[36mSignUpPage-65Hihzig.js                               [39m[1m[2m  2.54 kB[22m[1m[22m[2m │ gzip:   1.28 kB[22m[2m │ map:     6.93 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DfeD1zCD.js                                    [39m[1m[2m  4.03 kB[22m[1m[22m[2m │ gzip:   1.82 kB[22m[2m │ map:    11.11 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-B6FCYPt1.js                                    [39m[1m[2m  5.74 kB[22m[1m[22m[2m │ gzip:   2.38 kB[22m[2m │ map:    17.85 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DmNMPszc.js                                    [39m[1m[2m  6.18 kB[22m[1m[22m[2m │ gzip:   2.66 kB[22m[2m │ map:    23.31 kB[22m
+[2mdist/[22m[2massets/[22m[36museQuery-BT-p3XIH.js                                 [39m[1m[2m  8.06 kB[22m[1m[22m[2m │ gzip:   2.98 kB[22m[2m │ map:    50.41 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-Bxa0HLN-.js                                    [39m[1m[2m224.34 kB[22m[1m[22m[2m │ gzip:  58.91 kB[22m[2m │ map: 1,204.81 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-Chc4UG10.js                                    [39m[1m[33m276.11 kB[39m[22m[2m │ gzip:  87.61 kB[22m[2m │ map: 1,494.36 kB[22m
+[2mdist/[22m[2massets/[22m[36mreact-DlgEDExi.js                                    [39m[1m[33m314.83 kB[39m[22m[2m │ gzip: 100.38 kB[22m[2m │ map: 1,589.27 kB[22m
+[33m
+(!) Some chunks are larger than 250 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 5.06s[39m

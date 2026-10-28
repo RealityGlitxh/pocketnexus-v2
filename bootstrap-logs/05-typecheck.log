@@ -1,0 +1,13 @@
+
+> pocketnexus-v2@0.0.0 typecheck /home/runner/work/pocketnexus-v2/pocketnexus-v2
+> pnpm -r --parallel --no-bail typecheck
+
+Scope: 4 of 5 workspace projects
+apps/web typecheck$ tsc -p tsconfig.json
+packages/database typecheck$ tsc -p tsconfig.json
+packages/shared typecheck$ tsc -p tsconfig.json
+packages/ui typecheck$ tsc -p tsconfig.json
+packages/database typecheck: Done
+packages/shared typecheck: Done
+packages/ui typecheck: Done
+apps/web typecheck: Done

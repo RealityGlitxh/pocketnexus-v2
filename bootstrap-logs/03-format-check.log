@@ -1,0 +1,9 @@
+
+> pocketnexus-v2@0.0.0 format:check /home/runner/work/pocketnexus-v2/pocketnexus-v2
+> prettier --check .
+
+Checking formatting...
+[[33mwarn[39m] apps/web/e2e/auth.spec.ts
+[[33mwarn[39m] docs/DEPLOYMENT.md
+[[33mwarn[39m] Code style issues found in 2 files. Run Prettier with --write to fix.
+ ELIFECYCLE  Command failed with exit code 1.

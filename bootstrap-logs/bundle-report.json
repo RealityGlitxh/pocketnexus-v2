@@ -1,0 +1,1317 @@
+[
+  {
+    "file": "assets/react-DlgEDExi.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": [],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.production.js",
+        "bytes": 644593
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-router@7.18.5_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs",
+        "bytes": 224847
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/cjs/react.production.js",
+        "bytes": 19185
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/scheduler@0.28.0/node_modules/scheduler/cjs/scheduler.production.js",
+        "bytes": 11134
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom.production.js",
+        "bytes": 7918
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/cjs/react-jsx-runtime.production.js",
+        "bytes": 1294
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/index.js",
+        "bytes": 520
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/client.js",
+        "bytes": 512
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/jsx-runtime.js",
+        "bytes": 239
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/scheduler@0.28.0/node_modules/scheduler/index.js",
+        "bytes": 226
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/index.js",
+        "bytes": 194
+      },
+      {
+        "id": "\u0000commonjsHelpers.js",
+        "bytes": 140
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/index.js?commonjs-es-import",
+        "bytes": 101
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/jsx-runtime.js?commonjs-es-import",
+        "bytes": 44
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/index.js?commonjs-es-import",
+        "bytes": 40
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/cjs/react-jsx-runtime.production.js?commonjs-exports",
+        "bytes": 36
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/client.js?commonjs-es-import",
+        "bytes": 36
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.production.js?commonjs-exports",
+        "bytes": 35
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/jsx-runtime.js?commonjs-module",
+        "bytes": 31
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/scheduler@0.28.0/node_modules/scheduler/index.js?commonjs-module",
+        "bytes": 30
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/scheduler@0.28.0/node_modules/scheduler/cjs/scheduler.production.js?commonjs-exports",
+        "bytes": 30
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/index.js?commonjs-module",
+        "bytes": 29
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom.production.js?commonjs-exports",
+        "bytes": 29
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/client.js?commonjs-module",
+        "bytes": 27
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/index.js?commonjs-module",
+        "bytes": 26
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react@19.3.1/node_modules/react/cjs/react.production.js?commonjs-exports",
+        "bytes": 26
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/cookie@1.1.1/node_modules/cookie/dist/index.js?commonjs-exports",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/cookie@1.1.1/node_modules/cookie/dist/index.js",
+        "bytes": 0
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/cookie@1.1.1/node_modules/cookie/dist/index.js?commonjs-es-import",
+        "bytes": 0
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/set-cookie-parser@2.7.3/node_modules/set-cookie-parser/lib/set-cookie.js?commonjs-module",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/set-cookie-parser@2.7.3/node_modules/set-cookie-parser/lib/set-cookie.js",
+        "bytes": 0
+      },
+      {
+        "id": "\u0000/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/set-cookie-parser@2.7.3/node_modules/set-cookie-parser/lib/set-cookie.js?commonjs-es-import",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-router@7.18.5_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/react-router/dist/development/chunk-JAHXRPFV.mjs",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-router@7.18.5_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/react-router/dist/development/index.mjs",
+        "bytes": 0
+      }
+    ]
+  },
+  {
+    "file": "assets/index-Chc4UG10.js",
+    "isEntry": true,
+    "isDynamicEntry": false,
+    "imports": ["assets/react-DlgEDExi.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/tailwind-merge@3.7.0/node_modules/tailwind-merge/dist/bundle-mjs.mjs",
+        "bytes": 105226
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/schemas.js",
+        "bytes": 58528
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/queryClient.js",
+        "bytes": 29786
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/to-json-schema.js",
+        "bytes": 28546
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-toast@1.3.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types+react@1_72d2e12f1af98becc17c9660ff8081b2/node_modules/@radix-ui/react-toast/dist/index.mjs",
+        "bytes": 27340
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@floating-ui+core@1.8.0/node_modules/@floating-ui/core/dist/floating-ui.core.mjs",
+        "bytes": 27058
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/schemas.js",
+        "bytes": 26777
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js",
+        "bytes": 26704
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@floating-ui+dom@1.8.0/node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs",
+        "bytes": 26100
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-menu@2.2.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types+react@19_5b19b71a44c52a23e68bd8126ace118c/node_modules/@radix-ui/react-menu/dist/index.mjs",
+        "bytes": 24234
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-collection@1.2.0_@types+react-dom@19.3.0_@types+react@19.3.0__@types+re_6acb2d8ed0d1a5e2d86fa68fa86b38fc/node_modules/@radix-ui/react-collection/dist/index.mjs",
+        "bytes": 21645
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/query.js",
+        "bytes": 18540
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/json-schema-processors.js",
+        "bytes": 14810
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-dismissable-layer@1.2.1_@types+react-dom@19.3.0_@types+react@19.3.0__@t_aa9a2defeade16af3bdfd2945af978c3/node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs",
+        "bytes": 14527
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-dialog@1.3.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types+react@_4dc34b117641e6b0d7103bbf4056ed99/node_modules/@radix-ui/react-dialog/dist/index.mjs",
+        "bytes": 12252
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/memoizer.js",
+        "bytes": 11767
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-popper@1.4.0_@types+react-dom@19.3.0_@types+react@19.3.0__@types+react@_8afc6f49a39cf3de4250aed01ab9dae8/node_modules/@radix-ui/react-popper/dist/index.mjs",
+        "bytes": 11579
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/api.js",
+        "bytes": 10993
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-focus-scope@1.3.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types+r_6d7db95e6b4b16578fd42789685673fa/node_modules/@radix-ui/react-focus-scope/dist/index.mjs",
+        "bytes": 10881
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@floating-ui+react-dom@2.1.9_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs",
+        "bytes": 9959
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-roving-focus@1.2.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types+_bed290ae4c554285fceef8952991064b/node_modules/@radix-ui/react-roving-focus/dist/index.mjs",
+        "bytes": 9733
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/mutation.js",
+        "bytes": 9702
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/layouts/AppShell.tsx",
+        "bytes": 8992
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/SideEffect.js",
+        "bytes": 7798
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/checks.js",
+        "bytes": 7583
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/parse.js",
+        "bytes": 7090
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/queryCache.js",
+        "bytes": 7076
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/mutationCache.js",
+        "bytes": 7018
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-dropdown-menu@2.2.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types_59087697bb8d70fe27e0ede367aec154/node_modules/@radix-ui/react-dropdown-menu/dist/index.mjs",
+        "bytes": 6774
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-slot@1.5.0_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs",
+        "bytes": 6677
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-presence@1.1.11_@types+react-dom@19.3.0_@types+react@19.3.0__@types+rea_f62c16392ef5c0f7dddc17b4112d7eab/node_modules/@radix-ui/react-presence/dist/index.mjs",
+        "bytes": 6436
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/errors.js",
+        "bytes": 6281
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/core.js",
+        "bytes": 6257
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/utils.js",
+        "bytes": 6217
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js",
+        "bytes": 5762
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@floating-ui+utils@0.2.12/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs",
+        "bytes": 5491
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/aria-hidden@1.2.6/node_modules/aria-hidden/dist/es2015/index.js",
+        "bytes": 5359
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/locales/en.js",
+        "bytes": 5228
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/retryer.js",
+        "bytes": 4735
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/timeoutManager.js",
+        "bytes": 4535
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/handleScroll.js",
+        "bytes": 4398
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-context@1.3.0_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-context/dist/index.mjs",
+        "bytes": 4220
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js",
+        "bytes": 3991
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/routes/routes.tsx",
+        "bytes": 3987
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/services/auth.service.ts",
+        "bytes": 3911
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@floating-ui+utils@0.2.12/node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs",
+        "bytes": 3895
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/notifyManager.js",
+        "bytes": 3764
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-use-controllable-state@1.3.0_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs",
+        "bytes": 3505
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/focusManager.js",
+        "bytes": 3327
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll-bar@2.3.8_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll-bar/dist/es2015/component.js",
+        "bytes": 3150
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Toast.tsx",
+        "bytes": 3085
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/States.tsx",
+        "bytes": 3025
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/tslib@2.8.1/node_modules/tslib/tslib.es6.mjs",
+        "bytes": 2821
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/onlineManager.js",
+        "bytes": 2799
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/use-sidecar@1.1.3_@types+react@19.3.0_react@19.3.1/node_modules/use-sidecar/dist/es2015/medium.js",
+        "bytes": 2376
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/class-variance-authority@0.7.1/node_modules/class-variance-authority/dist/index.mjs",
+        "bytes": 2365
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/shared/src/config/env.ts",
+        "bytes": 2316
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/components/ErrorBoundaries.tsx",
+        "bytes": 2291
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/errors.js",
+        "bytes": 2284
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/UI.js",
+        "bytes": 2024
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/AuthProvider.tsx",
+        "bytes": 2022
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Dialog.tsx",
+        "bytes": 1936
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Navigation.tsx",
+        "bytes": 1919
+      },
+      {
+        "id": "\u0000vite/preload-helper.js",
+        "bytes": 1877
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+primitive@1.2.0/node_modules/@radix-ui/primitive/dist/index.mjs",
+        "bytes": 1862
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js",
+        "bytes": 1849
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/components/BrandMark.tsx",
+        "bytes": 1849
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/subscribable.js",
+        "bytes": 1759
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/use-callback-ref@1.3.3_@types+react@19.3.0_react@19.3.1/node_modules/use-callback-ref/dist/es2015/useMergeRef.js",
+        "bytes": 1654
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/DropdownMenu.tsx",
+        "bytes": 1645
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-use-size@1.1.5_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-use-size/dist/index.mjs",
+        "bytes": 1474
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/removable.js",
+        "bytes": 1411
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/registries.js",
+        "bytes": 1404
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-focus-guards@1.2.0_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-focus-guards/dist/index.mjs",
+        "bytes": 1333
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/doc.js",
+        "bytes": 1282
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-style-singleton@2.2.3_@types+react@19.3.0_react@19.3.1/node_modules/react-style-singleton/dist/es2015/singleton.js",
+        "bytes": 1240
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/app/theme.tsx",
+        "bytes": 1222
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/use-callback-ref@1.3.3_@types+react@19.3.0_react@19.3.1/node_modules/use-callback-ref/dist/es2015/useRef.js",
+        "bytes": 1182
+      },
+      {
+        "id": "\u0000vite/modulepreload-polyfill.js",
+        "bytes": 1168
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Button.variants.ts",
+        "bytes": 1153
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/shared/src/schemas/auth.ts",
+        "bytes": 1123
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-compose-refs@1.1.5_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-compose-refs/dist/index.mjs",
+        "bytes": 1107
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-primitive@2.2.0_@types+react-dom@19.3.0_@types+react@19.3.0__@types+rea_8110221bfe749bbb617b2ef4d8402995/node_modules/@radix-ui/react-primitive/dist/index.mjs",
+        "bytes": 1051
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/layouts/AuthLayout.tsx",
+        "bytes": 998
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll-bar@2.3.8_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll-bar/dist/es2015/utils.js",
+        "bytes": 991
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/components/RouteFallback.tsx",
+        "bytes": 957
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-use-is-hydrated@0.1.3_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-use-is-hydrated/dist/index.mjs",
+        "bytes": 928
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/Icon.js",
+        "bytes": 920
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/shared/src/utils.js",
+        "bytes": 918
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-use-effect-event@0.0.5_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-use-effect-event/dist/index.mjs",
+        "bytes": 878
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/swords.js",
+        "bytes": 833
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-visually-hidden@1.2.13_@types+react-dom@19.3.0_@types+react@19.3.0__@ty_703f89cfbdd73455c4bf03a3c2fc4305/node_modules/@radix-ui/react-visually-hidden/dist/index.mjs",
+        "bytes": 820
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Button.tsx",
+        "bytes": 800
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/shared/src/result.ts",
+        "bytes": 779
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/parse.js",
+        "bytes": 766
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/settings.js",
+        "bytes": 714
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/layers.js",
+        "bytes": 707
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-portal@1.2.0_@types+react-dom@19.3.0_@types+react@19.3.0__@types+react@_058d94c3625e9af8e54f0154a66c0818/node_modules/@radix-ui/react-portal/dist/index.mjs",
+        "bytes": 693
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/lib/supabase.ts",
+        "bytes": 678
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-use-callback-ref@1.1.5_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs",
+        "bytes": 667
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/octagon-alert.js",
+        "bytes": 665
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/routes/navigation.ts",
+        "bytes": 621
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/createLucideIcon.js",
+        "bytes": 615
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/layout-dashboard.js",
+        "bytes": 603
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/authTransitions.ts",
+        "bytes": 577
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/aggresiveCapture.js",
+        "bytes": 560
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-style-singleton@2.2.3_@types+react@19.3.0_react@19.3.1/node_modules/react-style-singleton/dist/es2015/component.js",
+        "bytes": 549
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/use-callback-ref@1.3.3_@types+react@19.3.0_react@19.3.1/node_modules/use-callback-ref/dist/es2015/assignRef.js",
+        "bytes": 548
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Badge.variants.ts",
+        "bytes": 547
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-style-singleton@2.2.3_@types+react@19.3.0_react@19.3.1/node_modules/react-style-singleton/dist/es2015/hook.js",
+        "bytes": 546
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/use-sidecar@1.1.3_@types+react@19.3.0_react@19.3.1/node_modules/use-sidecar/dist/es2015/exports.js",
+        "bytes": 528
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-id@1.1.4_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-id/dist/index.mjs",
+        "bytes": 526
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/inbox.js",
+        "bytes": 506
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/triangle-alert.js",
+        "bytes": 502
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/main.tsx",
+        "bytes": 495
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/chart-column.js",
+        "bytes": 467
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/library.js",
+        "bytes": 442
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/log-in.js",
+        "bytes": 432
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/log-out.js",
+        "bytes": 432
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/app/Providers.tsx",
+        "bytes": 431
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-direction@1.2.0_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-direction/dist/index.mjs",
+        "bytes": 418
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/circle-x.js",
+        "bytes": 414
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/info.js",
+        "bytes": 408
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/defaultAttributes.js",
+        "bytes": 404
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/menu.js",
+        "bytes": 391
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/shared/src/constants.ts",
+        "bytes": 386
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/user-round.js",
+        "bytes": 382
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/circle-check.js",
+        "bytes": 380
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/app/queryClient.ts",
+        "bytes": 368
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+        "bytes": 362
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll-bar@2.3.8_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll-bar/dist/es2015/constants.js",
+        "bytes": 346
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/x.js",
+        "bytes": 338
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/loader-circle.js",
+        "bytes": 330
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/lib/cn.ts",
+        "bytes": 320
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/environmentManager.js",
+        "bytes": 252
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/Combination.js",
+        "bytes": 235
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/toastContext.ts",
+        "bytes": 223
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/app/themeContext.ts",
+        "bytes": 223
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/authContext.ts",
+        "bytes": 218
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Badge.tsx",
+        "bytes": 170
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/lib/env.ts",
+        "bytes": 169
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/get-nonce@1.0.1/node_modules/get-nonce/dist/es2015/index.js",
+        "bytes": 145
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-use-layout-effect@1.1.4_@types+react@19.3.0_react@19.3.1/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs",
+        "bytes": 116
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/sidecar.js",
+        "bytes": 62
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/versions.js",
+        "bytes": 62
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/react-remove-scroll@2.7.2_@types+react@19.3.0_react@19.3.1/node_modules/react-remove-scroll/dist/es2015/medium.js",
+        "bytes": 38
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@fontsource-variable+inter@5.3.0/node_modules/@fontsource-variable/inter/index.css",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@fontsource-variable+space-grotesk@5.3.0/node_modules/@fontsource-variable/space-grotesk/index.css",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/styles/index.css",
+        "bytes": 0
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/index.html",
+        "bytes": 0
+      }
+    ]
+  },
+  {
+    "file": "assets/index-B6FCYPt1.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/index-Chc4UG10.js",
+      "assets/useQuery-BT-p3XIH.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/dashboard/SystemStatus.tsx",
+        "bytes": 3059
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/dashboard/DashboardPage.tsx",
+        "bytes": 2729
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/dashboard/statusIndicators.ts",
+        "bytes": 1991
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/services/health.service.ts",
+        "bytes": 970
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/circle-minus.js",
+        "bytes": 370
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/arrow-right.js",
+        "bytes": 362
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/dashboard/index.ts",
+        "bytes": 0
+      }
+    ]
+  },
+  {
+    "file": "assets/index-BlpEe0LX.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PlaceholderPage-DSrXTeEy.js",
+      "assets/index-Chc4UG10.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/cards/index.tsx",
+        "bytes": 567
+      }
+    ]
+  },
+  {
+    "file": "assets/index-DsY7Crpi.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PlaceholderPage-DSrXTeEy.js",
+      "assets/index-Chc4UG10.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/decks/index.tsx",
+        "bytes": 476
+      }
+    ]
+  },
+  {
+    "file": "assets/index-CS37mlXg.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PlaceholderPage-DSrXTeEy.js",
+      "assets/index-Chc4UG10.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/battles/index.tsx",
+        "bytes": 507
+      }
+    ]
+  },
+  {
+    "file": "assets/index-DLvGr35t.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PlaceholderPage-DSrXTeEy.js",
+      "assets/index-Chc4UG10.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/meta/index.tsx",
+        "bytes": 548
+      }
+    ]
+  },
+  {
+    "file": "assets/PlaceholderPage-DSrXTeEy.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/index-Chc4UG10.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/components/PlaceholderPage.tsx",
+        "bytes": 1626
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/construction.js",
+        "bytes": 675
+      }
+    ]
+  },
+  {
+    "file": "assets/index-DfeD1zCD.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/useQuery-BT-p3XIH.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/index-Chc4UG10.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/profile/index.tsx",
+        "bytes": 3257
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/RequireAuth.tsx",
+        "bytes": 1589
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/key-round.js",
+        "bytes": 584
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/plug-zap.js",
+        "bytes": 582
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/services/profile.service.ts",
+        "bytes": 558
+      }
+    ]
+  },
+  {
+    "file": "assets/useQuery-BT-p3XIH.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": ["assets/index-Chc4UG10.js", "assets/react-DlgEDExi.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+query-core@5.105.0/node_modules/@tanstack/query-core/build/modern/queryObserver.js",
+        "bytes": 21299
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/suspense.js",
+        "bytes": 2258
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js",
+        "bytes": 1979
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js",
+        "bytes": 1771
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/useBaseQuery.js",
+        "bytes": 1716
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js",
+        "bytes": 718
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@tanstack+react-query@5.105.0_@types+react@19.3.0_react@19.3.1/node_modules/@tanstack/react-query/build/modern/useQuery.js",
+        "bytes": 115
+      }
+    ]
+  },
+  {
+    "file": "assets/index-DmNMPszc.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/PageHeader-5bXF6Jes.js",
+      "assets/index-Chc4UG10.js",
+      "assets/AuthFormShell-DEi0EzMY.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@radix-ui+react-tabs@1.2.1_@types+react-dom@19.3.0_@types+react@19.3.0__@types+react@19_519fe3e24f3d946c91e5ee8267015a1e/node_modules/@radix-ui/react-tabs/dist/index.mjs",
+        "bytes": 6394
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/settings/index.tsx",
+        "bytes": 4083
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Tabs.tsx",
+        "bytes": 1094
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/sun.js",
+        "bytes": 725
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/monitor.js",
+        "bytes": 482
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/moon.js",
+        "bytes": 427
+      }
+    ]
+  },
+  {
+    "file": "assets/PageHeader-5bXF6Jes.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": ["assets/react-DlgEDExi.js", "assets/useDocumentTitle-DktZpsmc.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/components/PageHeader.tsx",
+        "bytes": 946
+      }
+    ]
+  },
+  {
+    "file": "assets/NotFoundPage-B146rlpp.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": ["assets/react-DlgEDExi.js", "assets/index-Chc4UG10.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/pages/NotFoundPage.tsx",
+        "bytes": 486
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/compass.js",
+        "bytes": 473
+      }
+    ]
+  },
+  {
+    "file": "assets/SignInPage-CBbRXvmA.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/index-Chc4UG10.js",
+      "assets/AuthFormShell-DEi0EzMY.js",
+      "assets/useFormFields-Cyt3BoB5.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/pages/SignInPage.tsx",
+        "bytes": 2647
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/safeReturnPath.ts",
+        "bytes": 210
+      }
+    ]
+  },
+  {
+    "file": "assets/SignUpPage-65Hihzig.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/index-Chc4UG10.js",
+      "assets/AuthFormShell-DEi0EzMY.js",
+      "assets/useFormFields-Cyt3BoB5.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/pages/SignUpPage.tsx",
+        "bytes": 3808
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/mail-check.js",
+        "bytes": 485
+      }
+    ]
+  },
+  {
+    "file": "assets/ForgotPasswordPage-11J1Mphf.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/index-Chc4UG10.js",
+      "assets/AuthFormShell-DEi0EzMY.js",
+      "assets/useFormFields-Cyt3BoB5.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/pages/ForgotPasswordPage.tsx",
+        "bytes": 2046
+      }
+    ]
+  },
+  {
+    "file": "assets/UpdatePasswordPage-BtEnwbyf.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/index-Chc4UG10.js",
+      "assets/AuthFormShell-DEi0EzMY.js",
+      "assets/useFormFields-Cyt3BoB5.js",
+      "assets/useDocumentTitle-DktZpsmc.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/pages/UpdatePasswordPage.tsx",
+        "bytes": 2943
+      }
+    ]
+  },
+  {
+    "file": "assets/useFormFields-Cyt3BoB5.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": ["assets/react-DlgEDExi.js", "assets/index-Chc4UG10.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Input.tsx",
+        "bytes": 3113
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/useFormFields.ts",
+        "bytes": 982
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/lucide-react@0.548.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/search.js",
+        "bytes": 367
+      }
+    ]
+  },
+  {
+    "file": "assets/AuthFormShell-DEi0EzMY.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": [
+      "assets/react-DlgEDExi.js",
+      "assets/useDocumentTitle-DktZpsmc.js",
+      "assets/index-Chc4UG10.js"
+    ],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/features/auth/AuthFormShell.tsx",
+        "bytes": 1883
+      }
+    ]
+  },
+  {
+    "file": "assets/useDocumentTitle-DktZpsmc.js",
+    "isEntry": false,
+    "isDynamicEntry": false,
+    "imports": ["assets/react-DlgEDExi.js", "assets/index-Chc4UG10.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/packages/ui/src/components/Card.tsx",
+        "bytes": 1041
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/apps/web/src/hooks/useDocumentTitle.ts",
+        "bytes": 163
+      }
+    ]
+  },
+  {
+    "file": "assets/index-Bxa0HLN-.js",
+    "isEntry": false,
+    "isDynamicEntry": true,
+    "imports": ["assets/index-Chc4UG10.js", "assets/react-DlgEDExi.js"],
+    "modules": [
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/GoTrueClient.js",
+        "bytes": 271500
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+storage-js@2.118.0/node_modules/@supabase/storage-js/dist/index.mjs",
+        "bytes": 114646
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+postgrest-js@2.118.0/node_modules/@supabase/postgrest-js/dist/index.mjs",
+        "bytes": 111174
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+phoenix@0.4.5/node_modules/@supabase/phoenix/priv/static/phoenix.mjs",
+        "bytes": 56053
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+supabase-js@2.118.0/node_modules/@supabase/supabase-js/dist/index.mjs",
+        "bytes": 38040
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js",
+        "bytes": 35915
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/RealtimeChannel.js",
+        "bytes": 34155
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/webauthn.js",
+        "bytes": 33724
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js",
+        "bytes": 26019
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/helpers.js",
+        "bytes": 21820
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/iceberg-js@0.8.1/node_modules/iceberg-js/dist/index.mjs",
+        "bytes": 15836
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+functions-js@2.118.0/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js",
+        "bytes": 13822
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/webauthn.errors.js",
+        "bytes": 11221
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/errors.js",
+        "bytes": 8566
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/fetch.js",
+        "bytes": 8241
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/lib/transformers.js",
+        "bytes": 8171
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/base64url.js",
+        "bytes": 7936
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/lib/serializer.js",
+        "bytes": 7562
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/RealtimePostgresFilterBuilder.js",
+        "bytes": 6276
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js",
+        "bytes": 4312
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js",
+        "bytes": 3394
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/web3/ethereum.js",
+        "bytes": 3043
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/phoenix/channelAdapter.js",
+        "bytes": 2891
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js",
+        "bytes": 2761
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+functions-js@2.118.0/node_modules/@supabase/functions-js/dist/module/types.js",
+        "bytes": 2694
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/constants.js",
+        "bytes": 1932
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js",
+        "bytes": 1409
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/locks.js",
+        "bytes": 1271
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/lib/normalizeChannelError.js",
+        "bytes": 1111
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/lib/constants.js",
+        "bytes": 991
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/polyfills.js",
+        "bytes": 698
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+realtime-js@2.118.0/node_modules/@supabase/realtime-js/dist/module/lib/version.js",
+        "bytes": 442
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/version.js",
+        "bytes": 442
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/local-storage.js",
+        "bytes": 391
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+supabase-js@2.118.0/node_modules/@supabase/supabase-js/dist/tracingRegistry.mjs",
+        "bytes": 259
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+functions-js@2.118.0/node_modules/@supabase/functions-js/dist/module/helper.js",
+        "bytes": 163
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/lib/types.js",
+        "bytes": 54
+      },
+      {
+        "id": "/home/runner/work/pocketnexus-v2/pocketnexus-v2/node_modules/.pnpm/@supabase+auth-js@2.118.0/node_modules/@supabase/auth-js/dist/module/AuthClient.js",
+        "bytes": 32
+      }
+    ]
+  }
+]

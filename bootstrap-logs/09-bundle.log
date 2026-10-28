@@ -1,0 +1,27 @@
+
+> pocketnexus-v2@0.0.0 check:bundle /home/runner/work/pocketnexus-v2/pocketnexus-v2
+> node scripts/check-bundle-budget.mjs
+
+Initial JS (2 files): 183.3 kB gz  (budget 190)
+CSS: 7.9 kB gz  (budget 30)
+  ok   AuthFormShell-DEi0EzMY.js                0.7 kB gz
+  ok   ForgotPasswordPage-11J1Mphf.js           0.8 kB gz
+  ok   NotFoundPage-B146rlpp.js                 0.5 kB gz
+  ok   PageHeader-5bXF6Jes.js                   0.4 kB gz
+  ok   PlaceholderPage-DSrXTeEy.js              0.8 kB gz
+  ok   SignInPage-CBbRXvmA.js                   0.9 kB gz
+  ok   SignUpPage-65Hihzig.js                   1.2 kB gz
+  ok   UpdatePasswordPage-BtEnwbyf.js           1.0 kB gz
+  ok   index-B6FCYPt1.js                        2.3 kB gz
+  ok   index-BlpEe0LX.js                        0.4 kB gz
+  ok   index-Bxa0HLN-.js                        57.4 kB gz
+  ok   index-CS37mlXg.js                        0.4 kB gz
+  ok   index-DLvGr35t.js                        0.4 kB gz
+  ok   index-DfeD1zCD.js                        1.8 kB gz
+  ok   index-DmNMPszc.js                        2.6 kB gz
+  ok   index-DsY7Crpi.js                        0.4 kB gz
+  ok   useDocumentTitle-DktZpsmc.js             0.4 kB gz
+  ok   useFormFields-Cyt3BoB5.js                1.2 kB gz
+  ok   useQuery-BT-p3XIH.js                     2.9 kB gz
+
+All bundle budgets met.

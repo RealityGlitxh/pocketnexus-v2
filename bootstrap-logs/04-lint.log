@@ -1,0 +1,4 @@
+
+> pocketnexus-v2@0.0.0 lint /home/runner/work/pocketnexus-v2/pocketnexus-v2
+> eslint . --max-warnings=0
+

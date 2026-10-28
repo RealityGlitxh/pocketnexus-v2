@@ -1,0 +1,58 @@
+
+dark theme
+  PASS  16.95:1  (min 4.5)  fg on canvas — body text
+  PASS  16.11:1  (min 4.5)  fg on surface — text on cards
+  PASS   8.43:1  (min 4.5)  fg-muted on canvas — secondary text
+  PASS   8.01:1  (min 4.5)  fg-muted on surface — secondary text on cards
+  PASS   6.93:1  (min 4.5)  fg-muted on surface-overlay — secondary text in dialogs
+  PASS   5.75:1  (min 4.5)  fg-subtle on canvas — tertiary text (used at small sizes)
+  PASS   5.47:1  (min 4.5)  fg-subtle on surface — tertiary text on cards
+  PASS   5.86:1  (min 4.5)  fg-subtle on surface-sunken — placeholders in inputs
+  PASS   4.81:1  (min 4.5)  primary-fg on primary — primary button label
+  PASS   5.70:1  (min 4.5)  primary-fg on primary-hover — primary button label (hover)
+  PASS   8.59:1  (min 4.5)  primary-text on canvas — violet links
+  PASS   8.16:1  (min 4.5)  primary-text on surface — violet links on cards
+  PASS   9.63:1  (min 4.5)  accent-text on surface — accent text
+  PASS  11.04:1  (min 4.5)  success-text on surface — success text
+  PASS  11.59:1  (min 4.5)  warning-text on surface — warning text
+  PASS   8.41:1  (min 4.5)  danger-text on surface — danger text
+  PASS   7.28:1  (min 4.5)  danger-text on surface-overlay — destructive menu item
+  PASS   9.12:1  (min 4.5)  warning-text on warning-soft@surface — warning badge
+  PASS   7.22:1  (min 4.5)  primary-text on primary-soft@surface — primary badge
+  PASS  14.26:1  (min 4.5)  fg on primary-soft@surface — active nav item
+  PASS   3.76:1  (min 3)  border-input on surface-sunken — input border on its own fill (non-text UI)
+  PASS   3.51:1  (min 3)  border-input on surface — input border against cards
+  PASS   3.04:1  (min 3)  border-input on surface-overlay — input border inside dialogs
+  PASS   4.73:1  (min 4.5)  fg-subtle on surface-overlay — nav "Soon" pill, dropdown labels
+  PASS   5.12:1  (min 4.5)  fg-subtle on surface-raised — subtle text on raised surfaces
+  PASS  11.10:1  (min 3)  focus on canvas — focus ring
+
+light theme
+  PASS  17.12:1  (min 4.5)  fg on canvas — body text
+  PASS  18.33:1  (min 4.5)  fg on surface — text on cards
+  PASS   7.33:1  (min 4.5)  fg-muted on canvas — secondary text
+  PASS   7.85:1  (min 4.5)  fg-muted on surface — secondary text on cards
+  PASS   7.85:1  (min 4.5)  fg-muted on surface-overlay — secondary text in dialogs
+  PASS   5.36:1  (min 4.5)  fg-subtle on canvas — tertiary text (used at small sizes)
+  PASS   5.74:1  (min 4.5)  fg-subtle on surface — tertiary text on cards
+  PASS   4.95:1  (min 4.5)  fg-subtle on surface-sunken — placeholders in inputs
+  PASS   5.93:1  (min 4.5)  primary-fg on primary — primary button label
+  PASS   7.30:1  (min 4.5)  primary-fg on primary-hover — primary button label (hover)
+  PASS   6.82:1  (min 4.5)  primary-text on canvas — violet links
+  PASS   7.30:1  (min 4.5)  primary-text on surface — violet links on cards
+  PASS   6.02:1  (min 4.5)  accent-text on surface — accent text
+  PASS   5.65:1  (min 4.5)  success-text on surface — success text
+  PASS   6.04:1  (min 4.5)  warning-text on surface — warning text
+  PASS   6.94:1  (min 4.5)  danger-text on surface — danger text
+  PASS   6.94:1  (min 4.5)  danger-text on surface-overlay — destructive menu item
+  PASS   5.29:1  (min 4.5)  warning-text on warning-soft@surface — warning badge
+  PASS   6.31:1  (min 4.5)  primary-text on primary-soft@surface — primary badge
+  PASS  15.83:1  (min 4.5)  fg on primary-soft@surface — active nav item
+  PASS   3.12:1  (min 3)  border-input on surface-sunken — input border on its own fill (non-text UI)
+  PASS   3.62:1  (min 3)  border-input on surface — input border against cards
+  PASS   3.62:1  (min 3)  border-input on surface-overlay — input border inside dialogs
+  PASS   5.74:1  (min 4.5)  fg-subtle on surface-overlay — nav "Soon" pill, dropdown labels
+  PASS   5.74:1  (min 4.5)  fg-subtle on surface-raised — subtle text on raised surfaces
+  PASS   4.38:1  (min 3)  focus on canvas — focus ring
+
+All contrast checks passed.
