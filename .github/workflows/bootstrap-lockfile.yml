@@ -1,0 +1,61 @@
+name: Bootstrap lockfile (temporary)
+
+# ONE-OFF, TEMPORARY. Generates pnpm-lock.yaml on a GitHub runner (the
+# development sandbox cannot reach the npm registry) and captures the real
+# output of every verification command. Results are committed to the
+# `bootstrap/results` branch for review. Nothing here touches `main`.
+# Delete this workflow and both bootstrap branches once main CI is green.
+
+on:
+  push:
+    branches: [bootstrap/lockfile]
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Generate lockfile and run every check (capture, don't stop)
+        run: |
+          set +e   # capture every failure instead of aborting (steps default to bash -e)
+          mkdir -p bootstrap-logs
+          run() { name="$1"; shift; echo "== $name: $*"; ( "$@" ) > "bootstrap-logs/$name.log" 2>&1; code=$?; echo "$name $code" >> bootstrap-logs/summary.txt; echo "   exit=$code"; }
+          {
+            echo "node $(node -v)  pnpm $(pnpm -v)  $(date -u +%FT%TZ)  sha $GITHUB_SHA"
+          } > bootstrap-logs/env.txt
+          run 01-install          pnpm install --no-frozen-lockfile
+          run 02-install-frozen   pnpm install --frozen-lockfile
+          run 03-format-check     pnpm format:check
+          run 04-lint             pnpm lint
+          run 05-typecheck        pnpm typecheck
+          run 06-test             pnpm test
+          run 07-contrast         node scripts/check-contrast.mjs
+          run 08-build            pnpm build
+          run 09-bundle           pnpm check:bundle
+          run 10-secrets          pnpm check:secrets
+          run 11-audit            pnpm audit --prod --audit-level high
+          run 11b-analyze         env ANALYZE=1 pnpm build
+          cp apps/web/dist/bundle-report.json bootstrap-logs/ 2>/dev/null || true
+          run 12-playwright-deps  pnpm --filter @pocketnexus/web exec playwright install --with-deps chromium
+          run 13-e2e              env CI=true pnpm test:e2e
+          # Prettier's own fix, offered as a separate diff for review (not applied to sources).
+          pnpm exec prettier --write . > /dev/null 2>&1 || true
+          git diff -- . ':!pnpm-lock.yaml' > bootstrap-logs/prettier-fix.diff || true
+          git checkout -- $(git diff --name-only -- . ':!pnpm-lock.yaml') 2>/dev/null || true
+          cat bootstrap-logs/summary.txt
+      - name: Commit lockfile + logs to bootstrap/results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          cp -r apps/web/playwright-report bootstrap-logs/ 2>/dev/null || true
+          git add pnpm-lock.yaml bootstrap-logs
+          git commit -m "bootstrap: lockfile and verification logs for $GITHUB_SHA"
+          git push --force origin HEAD:refs/heads/bootstrap/results
