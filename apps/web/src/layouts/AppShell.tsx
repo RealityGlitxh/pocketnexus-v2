@@ -44,19 +44,24 @@ function NavLinks({
           label={entry.label}
           trailing={
             entry.status === 'placeholder' ? (
-              <>
-                <span
-                  aria-hidden
-                  className="rounded-sm bg-surface-overlay px-1.5 py-px text-2xs font-medium text-fg-subtle"
-                >
-                  Soon
-                </span>
-                <span className="sr-only">{' (in development)'}</span>
-              </>
+              <span
+                aria-hidden
+                className="rounded-sm bg-surface-overlay px-1.5 py-px text-2xs font-medium text-fg-subtle"
+              >
+                Soon
+              </span>
             ) : null
           }
         >
-          <NavLink to={entry.to} end={entry.end ?? false} onClick={onNavigate} />
+          <NavLink
+            to={entry.to}
+            end={entry.end ?? false}
+            onClick={onNavigate}
+            // The visible "Soon" pill is decorative; state it explicitly for AT.
+            aria-label={
+              entry.status === 'placeholder' ? `${entry.label} (in development)` : undefined
+            }
+          />
         </NavItem>
       ))}
     </NavSection>
