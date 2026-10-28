@@ -13,9 +13,9 @@
 scan fails the build if its URL appears, and the deploy workflow refuses any Pages project name
 other than `pocketnexus-v2`.
 
-## Current status (Phase 0)
+## Current status
 
-| Step | Status (2026‑10‑28, Phase 0.1) |
+| Step | Status (2026‑10‑28, Phase 0.2) |
 | --- | --- |
 | GitHub repository `pocketnexus-v2` | **Blocked** — not created (no valid GitHub credentials in the build environment) |
 | Lockfile (`pnpm-lock.yaml`) | **Blocked** — npm registry unreachable from the build environment |
@@ -23,7 +23,9 @@ other than `pocketnexus-v2`.
 | Deploy gate | Logic executed locally against 8 simulated scenarios — all correct |
 | Cloudflare Pages project | **Not created** — needs owner's Cloudflare account |
 | Staging deploy | **Not deployed; no URL exists to verify** |
-| Dev Supabase project | **Not created** — no credentials provided |
+| Dev Supabase project | ✅ **Created** `pocketnexus-v2-dev` (ref `shodljlzwfsuouignvkv`, us-east-2, org PocketNexusV2, free plan) — 6 migrations applied; full RLS suite passed on the hosted DB inside a rolled-back transaction; advisor findings reviewed (all intentional) |
+| Dev auth settings (site URL, redirects, password policy) | ⏳ **Owner action** — no tool available to set them; see §2 |
+| Sign-up / login / logout / recovery against dev | ❌ **Not tested** — the sandbox cannot reach `*.supabase.co`, and there is no deployed app yet |
 
 ## One-time setup (owner)
 

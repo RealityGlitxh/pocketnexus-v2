@@ -77,8 +77,12 @@ caught one real bug during development (case-insensitive username collisions cra
 because `=` on `citext` resolved to case-sensitive text under `search_path = ''`); fixed in
 migration 0300.
 
-**Not yet done:** running migrations through the Supabase CLI local stack (`supabase db reset`)
-and against a hosted development project. The shim approximates — but is not — Supabase.
+**Hosted dev project (2026‑10‑28):** all 6 migrations applied to `pocketnexus-v2-dev`
+(`shodljlzwfsuouignvkv`) and the full RLS suite passed against real Supabase inside a transaction
+that was rolled back (no test data persisted). Local filenames were renamed to match the hosted
+migration versions so `supabase db push` / `migration list` stay in sync.
+
+**Not yet done:** running migrations through the Supabase CLI local stack (`supabase db reset`).
 
 ## Types
 

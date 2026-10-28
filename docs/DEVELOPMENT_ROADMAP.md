@@ -30,7 +30,9 @@ Legend: ✅ executed and passed · ❌ blocked · ⏳ written, not executed
 | Secret scan (source + build output) | ✅ Pass | verified against a planted key |
 | Workflow YAML validity | ✅ Pass | found and fixed a YAML error that would have stopped the Phase 0 deploy workflow from loading |
 | Deploy gate logic (8 scenarios incl. fork-named-`main`) | ✅ 8/8 correct | executed with stubbed `gh` |
-| Auth against a dev Supabase project | ❌ Blocked | no dev project or credentials |
+| Dev Supabase project + migrations | ✅ Created & applied | `shodljlzwfsuouignvkv`; migration filenames aligned with hosted history |
+| RLS suite on the hosted dev database | ✅ Pass (rolled back) | one timing check is only meaningful locally (single-transaction `now()`) |
+| Auth flows against the dev project | ❌ Blocked | sandbox cannot reach `*.supabase.co`; needs a running app |
 | GitHub CI run | ❌ Blocked | repo not created (invalid GitHub token) |
 | Cloudflare staging deploy + URL verification | ❌ Blocked | no Pages project / credentials |
 

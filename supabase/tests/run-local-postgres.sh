@@ -32,7 +32,7 @@ for f in "$ROOT"/supabase/migrations/*.sql; do
 done
 
 echo "== Re-applying migrations must fail cleanly (no silent duplicates)"
-if "${PSQL[@]}" -f "$ROOT/supabase/migrations/20261028000200_catalog.sql" >/dev/null 2>&1; then
+if "${PSQL[@]}" -f "$ROOT/supabase/migrations/20261028123549_catalog.sql" >/dev/null 2>&1; then
   echo "ERROR: migration 0200 re-applied without error; migrations must not be silently idempotent over existing tables" >&2
   exit 1
 fi
