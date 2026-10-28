@@ -69,6 +69,8 @@ const PAIRS = [
   ['border-input', 'surface-sunken', 3, 'input border on its own fill (non-text UI)'],
   ['border-input', 'surface', 3, 'input border against cards'],
   ['border-input', 'surface-overlay', 3, 'input border inside dialogs'],
+  ['fg-subtle', 'surface-overlay', 4.5, 'nav "Soon" pill, dropdown labels'],
+  ['fg-subtle', 'surface-raised', 4.5, 'subtle text on raised surfaces'],
   ['focus', 'canvas', 3, 'focus ring'],
 ];
 

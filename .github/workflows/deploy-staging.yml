@@ -1,8 +1,19 @@
 name: Deploy staging
 
-# Deploys ONLY to the new Cloudflare Pages project "pocketnexus-v2".
-# It never touches the legacy beta.pocketnexus.app site, its repository, or
-# its DNS. Runs only after CI passes on main, or manually.
+# Deploys ONLY to the new Cloudflare Pages project "pocketnexus-v2" (branch
+# alias "staging"). It never touches the legacy beta.pocketnexus.app site,
+# its repository, its Supabase project, or DNS.
+#
+# Gating rules (enforced by the `gate` job, which holds no secrets):
+#  1. The exact commit being deployed must have a SUCCESSFUL CI run triggered
+#     by a push to main of THIS repository (all CI jobs: verify, database, e2e).
+#  2. workflow_run events from pull requests or forks are rejected — the
+#     branches filter alone matches head-branch *names*, which a fork controls.
+#  3. Only the current tip of main is deployed, so a slow, older CI run can
+#     never overwrite a newer deployment.
+#  4. Manual runs re-verify rules 1 and 3 through the GitHub API.
+#
+# Third-party actions are pinned to commit SHAs (tag noted in the comment).
 
 on:
   workflow_run:
@@ -13,56 +24,127 @@ on:
 
 permissions:
   contents: read
-  deployments: write
 
 concurrency:
   group: deploy-staging
   cancel-in-progress: false
 
 jobs:
+  gate:
+    name: Verify CI passed for this exact commit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      sha: ${{ steps.check.outputs.sha }}
+      deploy: ${{ steps.check.outputs.deploy }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          RUN_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_EVENT: ${{ github.event.workflow_run.event }}
+          RUN_HEAD_REPO: ${{ github.event.workflow_run.head_repository.full_name }}
+          RUN_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          skip() { echo "::notice::Not deploying: $1"; echo "deploy=false" >> "$GITHUB_OUTPUT"; exit 0; }
+
+          if [ "$EVENT" = "workflow_run" ]; then
+            [ "$RUN_CONCLUSION" = "success" ] || skip "CI concluded '$RUN_CONCLUSION'"
+            [ "$RUN_EVENT" = "push" ]         || skip "CI run was triggered by '$RUN_EVENT', not push"
+            [ "$RUN_HEAD_REPO" = "$REPO" ]    || skip "CI run came from '$RUN_HEAD_REPO'"
+            [ "$RUN_HEAD_BRANCH" = "main" ]   || skip "CI run was for branch '$RUN_HEAD_BRANCH'"
+            SHA="$RUN_HEAD_SHA"
+          else
+            [ "$REF" = "refs/heads/main" ] || { echo "::error::Manual deploys must be run from main"; exit 1; }
+            SHA="$DISPATCH_SHA"
+            ok=$(gh api "repos/$REPO/actions/workflows/ci.yml/runs?head_sha=$SHA&event=push&status=success" --jq '.total_count')
+            [ "$ok" -gt 0 ] || { echo "::error::No successful CI push run for $SHA"; exit 1; }
+          fi
+
+          TIP=$(gh api "repos/$REPO/commits/main" --jq '.sha')
+          [ "$SHA" = "$TIP" ] || skip "$SHA is no longer the tip of main ($TIP); a newer run will deploy"
+
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "deploy=true" >> "$GITHUB_OUTPUT"
+          echo "Approved for deploy: $SHA"
+
   deploy:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    name: Build and deploy to Cloudflare Pages (staging)
+    needs: gate
+    if: needs.gate.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      deployments: write
     environment:
       name: staging
       url: ${{ steps.deploy.outputs.deployment-url }}
     env:
+      DEPLOY_SHA: ${{ needs.gate.outputs.sha }}
       VITE_APP_ENV: staging
       # Repository *variables* (not secrets): these values are public by design.
       VITE_SUPABASE_URL: ${{ vars.STAGING_SUPABASE_URL }}
       VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.STAGING_SUPABASE_PUBLISHABLE_KEY }}
       VITE_SITE_URL: ${{ vars.STAGING_SITE_URL }}
+      PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'pocketnexus-v2' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+          ref: ${{ needs.gate.outputs.sha }}
+          persist-credentials: false
+      - name: Confirm checkout matches the approved commit
+        run: test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
+      - name: Guard — refuse any Pages project other than pocketnexus-v2
+        run: |
+          test "$PAGES_PROJECT" = "pocketnexus-v2" || { echo "::error::Refusing to deploy to '$PAGES_PROJECT'"; exit 1; }
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: node scripts/write-headers.mjs
-      - name: Block search indexing on staging
-        run: printf 'User-agent: *\nDisallow: /\n' > apps/web/dist/robots.txt
-      - run: pnpm check:secrets
-      - name: Guard — refuse to deploy to the legacy project
+      - name: Stamp build with commit
         run: |
-          test "${{ vars.CLOUDFLARE_PAGES_PROJECT || 'pocketnexus-v2' }}" = "pocketnexus-v2" \
-            || { echo "Refusing: unexpected Pages project name"; exit 1; }
+          printf '{"sha":"%s","env":"staging"}\n' "$DEPLOY_SHA" > apps/web/dist/version.json
+      - name: Block search indexing on staging
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > apps/web/dist/robots.txt
+      - run: pnpm check:secrets
       - name: Deploy to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy apps/web/dist --project-name=pocketnexus-v2 --branch=staging --commit-dirty=true
-      - name: Smoke test the deployed URL
+          command: pages deploy apps/web/dist --project-name=pocketnexus-v2 --branch=staging --commit-hash=${{ needs.gate.outputs.sha }}
+      - name: Verify the deployed URL serves this commit
+        env:
+          URL: ${{ steps.deploy.outputs.deployment-url }}
         run: |
-          url="${{ steps.deploy.outputs.deployment-url }}"
-          echo "Deployed to $url"
-          code=$(curl -s -o /dev/null -w '%{http_code}' "$url/")
-          test "$code" = "200" || { echo "Smoke test failed: HTTP $code"; exit 1; }
-          curl -s "$url/" | grep -q '<div id="root">' || { echo "index.html missing root"; exit 1; }
+          set -euo pipefail
+          [ -n "$URL" ] || { echo "::error::wrangler returned no deployment URL"; exit 1; }
+          echo "Verifying $URL"
+          for i in 1 2 3 4 5 6; do
+            served=$(curl -fsS "$URL/version.json" | sed -n 's/.*"sha":"\([0-9a-f]*\)".*/\1/p') && [ "$served" = "$DEPLOY_SHA" ] && break
+            echo "  attempt $i: got '${served:-nothing}', waiting…"; sleep 10
+          done
+          [ "$served" = "$DEPLOY_SHA" ] || { echo "::error::Deployed URL does not serve $DEPLOY_SHA"; exit 1; }
+          curl -fsS "$URL/" | grep -q '<div id="root">' || { echo "::error::index.html missing #root"; exit 1; }
+          # SPA fallback: deep links must serve the app, not a 404.
+          curl -fsS "$URL/decks" | grep -q '<div id="root">' || { echo "::error::SPA deep link failed"; exit 1; }
+          # Security headers from _headers must be live.
+          curl -fsSI "$URL/" | grep -qi '^content-security-policy:' || { echo "::error::CSP header missing"; exit 1; }
+          curl -fsS "$URL/robots.txt" | grep -q 'Disallow: /' || { echo "::error::staging robots.txt not applied"; exit 1; }
+          echo "Verified: $URL serves $DEPLOY_SHA"

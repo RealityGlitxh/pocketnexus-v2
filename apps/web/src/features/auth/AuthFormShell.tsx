@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader } from '@pocketnexus/ui';
 import { AlertTriangle } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { useAuth } from './authContext';
 
 export function AuthFormShell({
@@ -15,6 +16,7 @@ export function AuthFormShell({
   footer?: ReactNode;
 }) {
   const { state } = useAuth();
+  useDocumentTitle(title);
   return (
     <Card className="w-full max-w-md">
       <CardHeader>

@@ -24,7 +24,13 @@ Passing CI does not mean the application is secure; it means these specific chec
 - **Open-redirect protection** on post-login return paths (`safeReturnPath`, tested against
   `//host`, absolute URLs, and backslash tricks).
 - Raw Supabase error text is never shown; codes map to pre-written messages.
-- Sign-out purges user-scoped query cache.
+- **User-scoped cache isolation:** all user queries use keys `['user', userId, …]` and are purged
+  whenever the signed-in identity changes — sign-out *or* a different account appearing (e.g. from
+  another tab) without an intervening `SIGNED_OUT`. Token refreshes keep the cache. Covered by
+  `authTransitions.test.ts` (executed) and `AuthProvider.test.tsx` (written).
+- Reset links (PKCE) work only in the browser that requested them; the expired-link page says so.
+  Password changes without a fresh recovery session surface Supabase's `reauthentication_needed`
+  as a safe, actionable message.
 
 ### Authorization (database)
 - RLS enabled on **every** table in `public`, `catalog`, `ingest` (asserted by tests).
@@ -44,6 +50,16 @@ Passing CI does not mean the application is secure; it means these specific chec
   COOP, HSTS.
 - React escapes output by default; **no `dangerouslySetInnerHTML`** anywhere in V2.
 
+### CI/CD
+- Staging deploys only a commit whose **CI run (all three jobs) succeeded on a push to `main` of
+  this repository**, and only if it is still the tip of `main`. The `gate` job holds no secrets.
+- `workflow_run` events from pull requests or forks are rejected — the `branches` filter alone
+  matches head-branch *names*, which a fork controls (a classic secret-exfiltration vector).
+- Manual deploys re-verify CI success for the exact SHA through the GitHub API.
+- The deployed URL is verified to serve the exact commit (`/version.json`), SPA deep links, the CSP
+  header, and staging `robots.txt` before the run passes.
+- All third-party actions are pinned to commit SHAs; checkouts don't persist credentials.
+
 ### Supply chain
 - Lockfile + `--frozen-lockfile` in CI; `pnpm audit --audit-level high` in CI; Dependabot weekly.
 - `onlyBuiltDependencies` allow-list limits install scripts to esbuild and Tailwind's oxide.
@@ -60,7 +76,9 @@ Passing CI does not mean the application is secure; it means these specific chec
 | Error reporting (Sentry or similar) with PII scrubbing | Not implemented |
 | GitHub secret scanning + push protection, branch protection | Must be enabled when the repo is created |
 | Penetration test / external review | Not done |
-| Lockfile | **Not yet generated** (registry blocked in Phase 0 environment) — first install must commit it |
+| Lockfile | **Not yet generated** (registry blocked in the build environment) — first install must commit it |
+| Dependency audit | **Not run** — `pnpm audit` needs the lockfile and registry |
+| Web/UI code never compiled or linted | Type/lint findings may exist; treat as unreviewed until `pnpm verify` passes |
 
 ## Legacy V8 findings (for the owner — not fixed here, V8 is out of scope)
 

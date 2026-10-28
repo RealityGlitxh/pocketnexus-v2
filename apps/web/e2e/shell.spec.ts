@@ -63,6 +63,45 @@ test('navigation works on every viewport', async ({ page, isMobile }) => {
   }
   await expect(page).toHaveURL(/\/battles$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Battle Tracker' })).toBeVisible();
+  await expect(page).toHaveTitle('Battle Tracker · PocketNexus');
+  await expect(page.locator('#main')).toBeFocused();
+});
+
+test('drawer is fully operable by keyboard on small screens', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
+
+  const menu = page.getByRole('button', { name: 'Open navigation' });
+  await menu.focus();
+  await page.keyboard.press('Enter');
+  const drawer = page.getByRole('dialog', { name: 'Navigation' });
+  await expect(drawer).toBeVisible();
+
+  // Escape closes and returns focus to the menu button.
+  await page.keyboard.press('Escape');
+  await expect(drawer).toBeHidden();
+  await expect(menu).toBeFocused();
+
+  // Focus stays trapped inside the open drawer.
+  await page.keyboard.press('Enter');
+  await expect(drawer).toBeVisible();
+  for (let i = 0; i < 15; i++) await page.keyboard.press('Tab');
+  expect(await drawer.evaluate((el) => el.contains(document.activeElement))).toBe(true);
+
+  // Activating a link navigates, closes the drawer, and focuses the page.
+  await drawer.getByRole('link', { name: /Settings/ }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/settings$/);
+  await expect(drawer).toBeHidden();
+  await expect(page.locator('#main')).toBeFocused();
+});
+
+test('deep links to unknown routes render the in-app not-found page', async ({ page }) => {
+  await page.goto('/this/route/does-not-exist');
+  await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+  await page.getByRole('link', { name: 'Go to dashboard' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
 });
 
 test('dashboard does not load the Supabase SDK when no backend is configured', async ({ page }) => {
@@ -90,4 +129,16 @@ test('theme preference persists across reloads', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
+
+test('no horizontal overflow on the narrowest supported phone (320px)', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  for (const path of ['/', '/settings', '/auth/sign-in', '/auth/sign-up']) {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow, `horizontal overflow on ${path}`).toBeLessThanOrEqual(0);
+  }
 });

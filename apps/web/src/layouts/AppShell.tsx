@@ -17,7 +17,7 @@ import {
   useToast,
 } from '@pocketnexus/ui';
 import { LogIn, LogOut, Menu, Settings, UserRound } from 'lucide-react';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { BrandMark } from '@/components/BrandMark';
 import { RouteFallback } from '@/components/RouteFallback';
@@ -26,7 +26,15 @@ import { env } from '@/lib/env';
 import { accountNav, primaryNav, type NavEntry } from '@/routes/navigation';
 import { signOut } from '@/services/auth.service';
 
-function NavLinks({ entries, label }: { entries: readonly NavEntry[]; label: string }) {
+function NavLinks({
+  entries,
+  label,
+  onNavigate,
+}: {
+  entries: readonly NavEntry[];
+  label: string;
+  onNavigate?: (() => void) | undefined;
+}) {
   return (
     <NavSection label={label}>
       {entries.map((entry) => (
@@ -36,30 +44,41 @@ function NavLinks({ entries, label }: { entries: readonly NavEntry[]; label: str
           label={entry.label}
           trailing={
             entry.status === 'placeholder' ? (
-              <span className="rounded-sm bg-surface-overlay px-1.5 py-px text-2xs font-medium text-fg-subtle">
-                Soon
-              </span>
+              <>
+                <span
+                  aria-hidden
+                  className="rounded-sm bg-surface-overlay px-1.5 py-px text-2xs font-medium text-fg-subtle"
+                >
+                  Soon
+                </span>
+                <span className="sr-only">(in development)</span>
+              </>
             ) : null
           }
         >
-          <NavLink to={entry.to} end={entry.end ?? false} />
+          <NavLink to={entry.to} end={entry.end ?? false} onClick={onNavigate} />
         </NavItem>
       ))}
     </NavSection>
   );
 }
 
-function SidebarContent() {
+function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-(--spacing-topbar) shrink-0 items-center px-4">
-        <Link to="/" className={cn('rounded-md', focusRing)} aria-label="PocketNexus home">
+        <Link
+          to="/"
+          onClick={onNavigate}
+          className={cn('rounded-md', focusRing)}
+          aria-label="PocketNexus home"
+        >
           <BrandMark />
         </Link>
       </div>
       <nav aria-label="Primary" className="flex-1 overflow-y-auto px-3 pb-4">
-        <NavLinks entries={primaryNav} label="Compete" />
-        <NavLinks entries={accountNav} label="Account" />
+        <NavLinks entries={primaryNav} label="Compete" onNavigate={onNavigate} />
+        <NavLinks entries={accountNav} label="Account" onNavigate={onNavigate} />
       </nav>
       <p className="border-t border-border px-4 py-3 text-2xs leading-relaxed text-fg-subtle">
         Unofficial fan project. Not affiliated with Nintendo, The Pokémon Company, Creatures, or DeNA.
@@ -120,19 +139,42 @@ function UserMenu() {
 function EnvironmentBadge() {
   if (env.appEnv === 'production') return null;
   return (
-    <Badge tone={env.appEnv === 'staging' ? 'accent' : 'primary'} title="Build environment">
+    <Badge
+      tone={env.appEnv === 'staging' ? 'accent' : 'primary'}
+      title="Build environment"
+      className="hidden sm:inline-flex"
+    >
       {env.appEnv}
     </Badge>
   );
 }
 
+function focusMain() {
+  document.getElementById('main')?.focus();
+}
+
 export function AppShell() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigatedFromDrawer = useRef(false);
+  const isFirstRender = useRef(true);
 
-  // Close the mobile drawer whenever the route changes.
-  useEffect(() => {
+  // Drawer links close the drawer themselves (no setState inside effects).
+  const closeDrawerForNavigation = () => {
+    navigatedFromDrawer.current = true;
     setMobileOpen(false);
+  };
+
+  // After client-side navigation, move focus to the new page's content so
+  // keyboard and screen-reader users start at the page, not the old link.
+  // When the drawer was the source, onCloseAutoFocus below does this instead
+  // (focus can't leave the drawer's focus trap until it has closed).
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (!navigatedFromDrawer.current) focusMain();
   }, [location.pathname]);
 
   return (
@@ -157,9 +199,18 @@ export function AppShell() {
         <DialogContent
           title="Navigation"
           hideTitle
+          onCloseAutoFocus={(e) => {
+            // Esc / close button: Radix returns focus to the menu button.
+            // Navigation: send focus to the new page instead.
+            if (navigatedFromDrawer.current) {
+              e.preventDefault();
+              navigatedFromDrawer.current = false;
+              focusMain();
+            }
+          }}
           className="top-0 left-0 h-dvh max-h-dvh w-(--spacing-sidebar) max-w-[85vw] translate-x-0 translate-y-0 gap-0 rounded-none border-y-0 border-l-0 p-0 data-[state=open]:animate-slide-in-left"
         >
-          <SidebarContent />
+          <SidebarContent onNavigate={closeDrawerForNavigation} />
         </DialogContent>
       </Dialog>
 
@@ -177,10 +228,14 @@ export function AppShell() {
           >
             <Menu aria-hidden />
           </Button>
-          <Link to="/" className={cn('rounded-md lg:hidden', focusRing)} aria-label="PocketNexus home">
+          <Link
+            to="/"
+            className={cn('min-w-0 rounded-md lg:hidden', focusRing)}
+            aria-label="PocketNexus home"
+          >
             <BrandMark compact />
           </Link>
-          <div className="ml-auto flex items-center gap-3">
+          <div className="ml-auto flex shrink-0 items-center gap-3">
             <EnvironmentBadge />
             <UserMenu />
           </div>

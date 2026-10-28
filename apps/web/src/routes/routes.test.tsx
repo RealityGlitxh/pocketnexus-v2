@@ -15,8 +15,11 @@ describe('application shell', () => {
     renderApp('/');
     const status = await screen.findByRole('heading', { name: 'System status' });
     const card = status.closest('section')!;
-    expect(within(card).getByText('Not connected')).toBeInTheDocument();
-    expect(within(card).getByText('Not configured for this build')).toBeInTheDocument();
+    expect(within(card).getByText('No backend configured for this build')).toBeInTheDocument();
+    expect(within(card).getByText('Skipped — no backend configured')).toBeInTheDocument();
+    expect(within(card).getByText('Accounts unavailable in this build')).toBeInTheDocument();
+    // Must never claim a connection that wasn't verified.
+    expect(within(card).queryByText(/connected/i)).toBeNull();
   });
 
   it.each(primaryNav.filter((n) => n.to !== '/').map((n) => [n.label, n.to]))(

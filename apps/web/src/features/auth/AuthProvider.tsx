@@ -1,9 +1,9 @@
-import type { Session } from '@supabase/supabase-js';
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { env } from '@/lib/env';
 import { getSupabase } from '@/lib/supabase';
 import { AuthContext, type AuthState } from './authContext';
+import { identityChanged, nextAuthState, type SessionLike } from './authTransitions';
 
 function initialState(): AuthState {
   if (env.supabase.status === 'missing') return { status: 'disabled', reason: 'missing' };
@@ -11,23 +11,20 @@ function initialState(): AuthState {
   return { status: 'loading' };
 }
 
-function fromSession(session: Session | null): AuthState {
-  if (!session) return { status: 'signed_out' };
-  return {
-    status: 'signed_in',
-    user: { id: session.user.id, email: session.user.email ?? null },
-  };
-}
-
 /**
  * Owns the auth session for the whole app. Subscribes once to Supabase auth
  * events; components read state via useAuth(). When Supabase is not
  * configured, state is permanently 'disabled' and no SDK code is loaded.
+ *
+ * Cache isolation: all user-scoped query keys start with ['user', …] and are
+ * removed whenever the signed-in identity changes (sign-out, or a different
+ * account appearing via another tab), never only on SIGNED_OUT.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>(initialState);
   const [recovery, setRecovery] = useState(false);
   const queryClient = useQueryClient();
+  const stateRef = useRef(state);
 
   useEffect(() => {
     const clientPromise = getSupabase();
@@ -35,26 +32,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
     let unsubscribe: (() => void) | undefined;
 
-    void clientPromise
+    const apply = (session: SessionLike | null) => {
+      const prev = stateRef.current;
+      const next = nextAuthState(prev, session);
+      if (identityChanged(prev, next)) {
+        queryClient.removeQueries({ queryKey: ['user'] });
+      }
+      stateRef.current = next;
+      setState(next);
+    };
+
+    clientPromise
       .then(async (client) => {
+        // Effect may have been cleaned up while the SDK chunk was loading
+        // (StrictMode double-invoke, fast unmount): don't leak a subscription.
+        if (cancelled) return;
         const { data } = client.auth.onAuthStateChange((event, session) => {
           if (cancelled) return;
           if (event === 'PASSWORD_RECOVERY') setRecovery(true);
-          if (event === 'SIGNED_OUT') {
-            setRecovery(false);
-            // Drop any user-scoped cached data immediately on sign-out.
-            queryClient.removeQueries({ queryKey: ['user'] });
-          }
-          setState(fromSession(session));
+          if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') setRecovery(false);
+          apply(session);
         });
         unsubscribe = () => {
           data.subscription.unsubscribe();
         };
         const { data: sessionData } = await client.auth.getSession();
-        if (!cancelled) setState(fromSession(sessionData.session));
+        if (!cancelled) apply(sessionData.session);
       })
       .catch(() => {
-        if (!cancelled) setState({ status: 'error' });
+        // SDK chunk failed to load or the client threw during init.
+        if (!cancelled) {
+          stateRef.current = { status: 'error' };
+          setState(stateRef.current);
+        }
       });
 
     return () => {

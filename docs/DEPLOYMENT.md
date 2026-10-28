@@ -15,13 +15,14 @@ other than `pocketnexus-v2`.
 
 ## Current status (Phase 0)
 
-| Step | Status |
+| Step | Status (2026‑10‑28, Phase 0.1) |
 | --- | --- |
 | GitHub repository `pocketnexus-v2` | **Blocked** — not created (no valid GitHub credentials in the build environment) |
 | Lockfile (`pnpm-lock.yaml`) | **Blocked** — npm registry unreachable from the build environment |
-| CI workflow | Written; **never run** |
+| CI workflow | YAML validated; **never run on GitHub** |
+| Deploy gate | Logic executed locally against 8 simulated scenarios — all correct |
 | Cloudflare Pages project | **Not created** — needs owner's Cloudflare account |
-| Staging deploy | **Pending** |
+| Staging deploy | **Not deployed; no URL exists to verify** |
 | Dev Supabase project | **Not created** — no credentials provided |
 
 ## One-time setup (owner)
@@ -60,9 +61,13 @@ and branch protection on `main` requiring the `CI` checks.
 4. GitHub repo → Settings → Variables: `STAGING_SUPABASE_URL`,
    `STAGING_SUPABASE_PUBLISHABLE_KEY`, `STAGING_SITE_URL` (public values only).
 5. Create a GitHub environment `staging` (optionally with required reviewers).
-6. Push to `main` → CI → `Deploy staging`. The workflow smoke-tests the returned URL; staging is
-   "verified" only after that step is green and a human has signed in on it.
-7. Optional custom domain (e.g. `next.pocketnexus.app`) — **owner decision**; adding it must not
+6. Push to `main` → CI → `Deploy staging`. The `gate` job deploys only if CI succeeded for that
+   exact commit on a push to `main` and it is still the tip of `main`. After deploying, the
+   workflow fetches `<url>/version.json` and fails unless it reports the deployed SHA; it also
+   checks a deep link, the CSP header, and `robots.txt`. Staging is "verified" only after that step
+   is green **and** a human has signed up / signed in on it.
+7. Branch protection on `main`: require the `verify`, `database`, and `e2e` checks.
+8. Optional custom domain (e.g. `next.pocketnexus.app`) — **owner decision**; adding it must not
    alter the existing `beta` record.
 
 ## Build-time headers

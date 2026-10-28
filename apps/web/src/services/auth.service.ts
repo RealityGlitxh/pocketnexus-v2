@@ -42,6 +42,12 @@ function mapAuthError(error: AuthError): AppError {
       return appError('invalid_input', 'That password is too weak. Try a longer one.');
     case 'same_password':
       return appError('invalid_input', 'Choose a password you have not used before.');
+    case 'reauthentication_needed':
+    case 'reauthentication_not_valid':
+      return appError(
+        'unauthenticated',
+        'For your security, request a password reset email and use that link to set a new password.',
+      );
     case 'over_request_rate_limit':
     case 'over_email_send_rate_limit':
       return appError('rate_limited');

@@ -54,6 +54,13 @@ under `prefers-reduced-motion`.
 - Form fields always have a label; hints and errors are wired via `aria-describedby`;
   invalid fields get `aria-invalid`.
 - Skip link, landmark regions, and a single `h1` per page.
+- Per-page document titles (`Deck Lab · PocketNexus`) via `useDocumentTitle` in `PageHeader` and
+  auth forms.
+- After client-side navigation focus moves to `#main` (not on first load). From the mobile drawer
+  this happens after the focus trap releases; dismissing the drawer with Esc returns focus to the
+  menu button.
+- Status is always spelled out in text (e.g. "Reachable: Failed"), never by color alone.
+- Minimum supported width 320 px (no horizontal scroll; covered by a Playwright test).
 - Automated axe scan (WCAG 2.2 AA tags) on every route at desktop, tablet, mobile in Playwright.
 
 ## Components (`@pocketnexus/ui`)

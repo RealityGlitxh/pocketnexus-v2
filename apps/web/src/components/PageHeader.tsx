@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 export function PageHeader({
   title,
@@ -11,6 +12,7 @@ export function PageHeader({
   badge?: ReactNode;
   actions?: ReactNode;
 }) {
+  useDocumentTitle(title);
   return (
     <header className="flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
       <div className="flex min-w-0 flex-col gap-2">

@@ -50,7 +50,9 @@ export function UpdatePasswordPage() {
     return (
       <AuthFormShell title="Link expired or invalid">
         <p className="text-sm text-fg-muted">
-          This password reset link is no longer valid. Request a new one to continue.
+          This password reset link is no longer valid. Links expire after one hour, can only be
+          used once, and must be opened in the same browser where you requested the reset.
+          Request a new one to continue.
         </p>
         <Button asChild variant="secondary">
           <Link to="/auth/forgot-password">Request a new link</Link>
